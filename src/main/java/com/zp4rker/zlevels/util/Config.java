@@ -70,10 +70,10 @@ public class Config {
         ERROR_MILLIS = Long.parseLong(data.get("ERROR_MILLIS").toString());
 
         // Get autorole enabled
-        AUTOROLE_ENABLED = Boolean.getBoolean(data.get("AUTOROLE_ENABLED").toString());
+        AUTOROLE_ENABLED = Boolean.parseBoolean(data.get("AUTOROLE_ENABLED").toString());
 
         // Get ratings enabled
-        RATINGS_ENABLED = Boolean.getBoolean(data.get("RATINGS_ENABLED").toString());
+        RATINGS_ENABLED = Boolean.parseBoolean(data.get("RATINGS_ENABLED").toString());
         // Get staff role
         STAFF_ROLE = data.get("STAFF_ROLE").toString();
         // Get channels for ratings
