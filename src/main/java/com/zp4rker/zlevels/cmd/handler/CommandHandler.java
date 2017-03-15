@@ -25,6 +25,8 @@ public class CommandHandler {
 
     @SubscribeEvent
     public void handle(MessageReceivedEvent event) {
+        // Check if in server
+        if (event.getGuild() == null) return;
         // Check server
         if (!event.getGuild().getId().equals("226865538247294976")) return;
         // Check prefix
