@@ -9,6 +9,7 @@ import com.zp4rker.zlevels.util.Pruner;
 import com.zp4rker.zlevels.util.ZLogger;
 import net.dv8tion.jda.core.entities.Message;
 
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 
 /**
@@ -20,8 +21,10 @@ public class FlushCommand implements CommandExecutor {
     public String onCommand(Message message) {
         // Run asynchronously
         Executors.newSingleThreadExecutor().submit(() -> {
-            // Check if sent by ZP4RKER
-            if (!message.getAuthor().getDiscriminator().equals("5928")) return;
+            // Get id
+            String id = message.getAuthor().getId();
+            // Check if sent by OP
+            if (Arrays.stream(Config.OPS).noneMatch(s -> s.equals(id))) return;
             // Prune members
             Pruner.prune();
             // Force auto role

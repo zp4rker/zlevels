@@ -16,6 +16,7 @@ public class Config {
     public static String TOKEN = "";
     public static String PREFIX = "";
     public static String SERVER = "";
+    public static String[] OPS = {"145064570237485056"};
 
     public static String DB_HOST = "";
     public static String DB_PORT = "";
@@ -54,6 +55,8 @@ public class Config {
         PREFIX = data.get("PREFIX").toString();
         // Get server
         SERVER = data.get("SERVER").toString();
+        // Get ops
+        OPS = (String[]) ((JSONArray) data.get("OPS")).toArray(new String[0]);
 
         // Get database host
         DB_HOST = data.get("DB_HOST").toString();
