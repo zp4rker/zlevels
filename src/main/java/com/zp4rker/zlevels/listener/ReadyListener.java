@@ -25,12 +25,14 @@ public class ReadyListener {
         ZLevels.handler.registerCommand(new RankCommand());
         // Register leaderboard command
         ZLevels.handler.registerCommand(new LeaderboardCommand());
-        // Register inactive command
-        ZLevels.handler.registerCommand(new InactiveCommand());
         // Register rating command
         ZLevels.handler.registerCommand(new RatingCommand());
         // Register rewards command
         ZLevels.handler.registerCommand(new RewardsCommand());
+        // Register inactive command
+        ZLevels.handler.registerCommand(new InactiveCommand());
+        // Register flush command
+        ZLevels.handler.registerCommand(new FlushCommand());
         // Send info
         ZLogger.info("Successfully registered " + ZLevels.handler.getCommands().values().size() + " commands!");
         // Run asynchonously
