@@ -29,6 +29,8 @@ public class FlushCommand implements CommandExecutor {
             Pruner.prune();
             // Force auto role
             forceAutoRole();
+            // Save all data
+            saveAllData();
         });
         // Return null
         return null;
@@ -46,6 +48,14 @@ public class FlushCommand implements CommandExecutor {
             }
             // Send info
             ZLogger.info("Successfully forced auto role on all user data.");
+        }
+    }
+
+    private void saveAllData() {
+        // Loop through all data
+        for (UserData data : UserData.getAllData()) {
+            // Save data
+            data.save();
         }
     }
 

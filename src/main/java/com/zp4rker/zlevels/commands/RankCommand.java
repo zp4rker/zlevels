@@ -85,7 +85,7 @@ public class RankCommand implements CommandExecutor {
             return;
         }
         // Get avatar url
-        String url = user.getEffectiveAvatarUrl();
+        String url = data.getAvatarUrl();
         // Create embed
         EmbedBuilder embed = new EmbedBuilder();
         // Set author
