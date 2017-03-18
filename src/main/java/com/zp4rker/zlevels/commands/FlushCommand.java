@@ -52,11 +52,15 @@ public class FlushCommand implements CommandExecutor {
     }
 
     private void saveAllData() {
+        // Send info
+        ZLogger.info("Saving all user data...");
         // Loop through all data
         for (UserData data : UserData.getAllData()) {
             // Save data
             data.save();
         }
+        // Send info
+        ZLogger.info("Successfully saved all user data.");
     }
 
 }

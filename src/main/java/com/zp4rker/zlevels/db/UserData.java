@@ -66,6 +66,11 @@ public class UserData {
         this.totalXp = totalXp;
         // Get and set levels
         setLevel(LevelsUtil.xpToLevels(totalXp));
+        // Check if autorole enabled
+        if (Config.AUTOROLE_ENABLED) {
+            // Auto-assign role
+            AutoRole.assignRole(this);
+        }
     }
 
     public int getLevel() {
@@ -89,11 +94,6 @@ public class UserData {
             }
             // Send DM
             user.getPrivateChannel().sendMessage("Congratulations, you are now level " + level + "!").queue();
-            // Check if autorole enabled
-            if (Config.AUTOROLE_ENABLED) {
-                // Auto-assign role
-                AutoRole.assignRole(this);
-            }
         }
         // Set level
         this.level = level;
