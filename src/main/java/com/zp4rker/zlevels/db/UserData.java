@@ -25,6 +25,8 @@ public class UserData {
 
     @DatabaseField(canBeNull = false, unique = true) private String userId;
 
+    @DatabaseField(canBeNull = false) private String username;
+
     @DatabaseField(canBeNull = false) private String avatarUrl;
 
     @DatabaseField(canBeNull = false) private long totalXp = 0;
@@ -46,11 +48,26 @@ public class UserData {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        // Get user
+        User user = ZLevels.jda.getUserById(getUserId());
+        // Set username and discriminator
+        setUsername(user.getName() + "#" + user.getDiscriminator());
+        // Return username
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getAvatarUrl() {
         // Get User
         User user = ZLevels.jda.getUserById(getUserId());
+        // Set avatar url
+        setAvatarUrl(user.getEffectiveAvatarUrl());
         // Return avatar url
-        return user.getEffectiveAvatarUrl();
+        return avatarUrl;
     }
 
     public void setAvatarUrl(String avatarUrl) {
@@ -104,6 +121,8 @@ public class UserData {
         UserData current = this;
         // Update avatar url
         current.setAvatarUrl(current.getAvatarUrl());
+        // Update username
+        current.setUsername(current.getUsername());
         // Run asynchronously
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
