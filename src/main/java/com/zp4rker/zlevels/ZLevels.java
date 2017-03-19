@@ -20,6 +20,8 @@ public class ZLevels {
     public static CommandHandler handler;
     public static JDA jda;
 
+    public static final String VERSION = "v1.1";
+
     public static void main(String[] args) {
         // Add blank line
         System.out.println();

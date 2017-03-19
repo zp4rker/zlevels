@@ -44,7 +44,14 @@ public class Config {
         // Loop through values
         for (Object key : data.keySet()) {
             // Check if empty
-            if (data.get(key.toString()).toString().equals("")) throw new ConfigException(new Throwable(key.toString()));
+            if (data.get(key.toString()).toString().equals("")) {
+                // Check if STAFF_ROLE or CHANNELS_FOR_RATINGS
+                if (key.toString().equals("STAFF_ROLE") || key.toString().equals("CHANNELS_FOR_RATINGS")) {
+                    // Get RATINGS_ENABLED
+                    boolean enabled = Boolean.parseBoolean(data.get("RATINGS_ENABLED").toString());
+                    if (enabled) throw new ConfigException(new Throwable(key.toString() + " can not be empty!"));
+                }
+            }
         }
 
         // Get name

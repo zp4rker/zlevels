@@ -43,6 +43,8 @@ public class ReadyListener {
             StaffRating.startMonth();
             // Load auto roles
             AutoRole.load();
+            // Send info
+            ZLogger.info("ZLevels " + ZLevels.VERSION + " is ready!");
         });
     }
 
