@@ -22,7 +22,7 @@ public class MessageSendListener {
     @SubscribeEvent
     public void onMessage(MessageReceivedEvent event) {
         // Check if correct server
-        if (!event.getMessage().getGuild().getId().equals(Config.SERVER)) return;
+        if (!(event.getGuild().getId().equals(Config.SERVER) || event.getGuild() == null)) return;
         // Check if bot
         if (event.getAuthor().isBot()) return;
         // Check spam filter
