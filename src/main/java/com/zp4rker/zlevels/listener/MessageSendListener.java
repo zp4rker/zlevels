@@ -21,8 +21,10 @@ public class MessageSendListener {
 
     @SubscribeEvent
     public void onMessage(MessageReceivedEvent event) {
+        // Check if in server
+        if (event.getGuild() == null) return;
         // Check if correct server
-        if (!(event.getGuild().getId().equals(Config.SERVER) || event.getGuild() == null)) return;
+        if (!event.getGuild().getId().equals(Config.SERVER)) return;
         // Check if bot
         if (event.getAuthor().isBot()) return;
         // Check spam filter

@@ -16,4 +16,14 @@ public class ZLogger {
         System.out.println("[WARNING] " + message + "\n");
     }
 
+    public static void debug(String message) {
+        // Append new line
+        System.out.println("[DEBUG] " + message + "\n");
+    }
+
+    public static void blankLine() {
+        // Blank line
+        System.out.println();
+    }
+
 }

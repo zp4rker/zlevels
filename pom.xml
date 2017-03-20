@@ -8,7 +8,7 @@
 
     <groupId>com.zp4rker</groupId>
     <artifactId>zlevels</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <repositories>
         <repository>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>3.0.BETA2_141</version>
+            <version>LATEST</version>
         </dependency>
         <!-- JDA Dependencies -->
         <dependency>

@@ -2,6 +2,7 @@ package com.zp4rker.zlevels.cmd.handler;
 
 import com.zp4rker.zlevels.cmd.CommandExecutor;
 import com.zp4rker.zlevels.cmd.RegisterCommand;
+import com.zp4rker.zlevels.util.Config;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -28,7 +29,7 @@ public class CommandHandler {
         // Check if in server
         if (event.getGuild() == null) return;
         // Check server
-        if (!event.getGuild().getId().equals("226865538247294976")) return;
+        if (!event.getGuild().getId().equals(Config.SERVER)) return;
         // Check prefix
         if (!event.getMessage().getContent().startsWith(prefix)) return;
         // Split the content
