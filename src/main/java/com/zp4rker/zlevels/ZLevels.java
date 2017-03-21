@@ -1,10 +1,11 @@
 package com.zp4rker.zlevels;
 
-import com.zp4rker.zlevels.cmd.handler.CommandHandler;
-import com.zp4rker.zlevels.db.Database;
-import com.zp4rker.zlevels.listener.*;
-import com.zp4rker.zlevels.util.Config;
-import com.zp4rker.zlevels.util.ZLogger;
+import com.zp4rker.zlevels.core.cmd.handler.CommandHandler;
+import com.zp4rker.zlevels.core.db.Database;
+import com.zp4rker.zlevels.core.util.AutoRole;
+import com.zp4rker.zlevels.listeners.*;
+import com.zp4rker.zlevels.core.config.Config;
+import com.zp4rker.zlevels.core.util.ZLogger;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -20,7 +21,7 @@ public class ZLevels {
     public static CommandHandler handler;
     public static JDA jda;
 
-    public static final String VERSION = "v1.0.2";
+    public static final String VERSION = "v1.0.3";
 
     public static void main(String[] args) {
         // Add blank line
@@ -33,6 +34,11 @@ public class ZLevels {
             ZLogger.warn("Config was invalid or missing! Stopping ZLevels...");
             // Return
             return;
+        }
+        // Check if roles file is valid
+        if (!AutoRole.load()) {
+            // Send warning
+            ZLogger.warn("Roles file was invalid or missing! Stopping ZLevels...");
         }
         // Check if can connect
         if (!Database.canConnect()) {
@@ -48,11 +54,11 @@ public class ZLevels {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Config.TOKEN)
                     .setEventManager(new AnnotatedEventManager()) // Use Annotation event manager
-                    .addListener(new ReadyListener()) // Ready listener
+                    .addListener(new ReadyListener()) // Ready listeners
                     .addListener(handler) // Command handler
-                    .addListener(new MessageSendListener()) // Message send listener
-                    .addListener(new MemberLeaveListener()) // Member leave listener
-                    .addListener(new ReactionAddListener()) // Reaction add listener
+                    .addListener(new MessageSendListener()) // Message send listeners
+                    .addListener(new MemberLeaveListener()) // Member leave listeners
+                    .addListener(new ReactionAddListener()) // Reaction add listeners
                     .addListener(new ReactionRemoveListener()) // Reaction remove listner
                     .buildBlocking();
         } catch (Exception e) {

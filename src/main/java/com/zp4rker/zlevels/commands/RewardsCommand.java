@@ -1,8 +1,8 @@
 package com.zp4rker.zlevels.commands;
 
-import com.zp4rker.zlevels.cmd.CommandExecutor;
-import com.zp4rker.zlevels.cmd.RegisterCommand;
-import com.zp4rker.zlevels.util.AutoRole;
+import com.zp4rker.zlevels.core.cmd.CommandExecutor;
+import com.zp4rker.zlevels.core.cmd.RegisterCommand;
+import com.zp4rker.zlevels.core.util.AutoRole;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Message;

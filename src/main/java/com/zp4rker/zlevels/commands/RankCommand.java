@@ -1,11 +1,11 @@
 package com.zp4rker.zlevels.commands;
 
-import com.zp4rker.zlevels.cmd.CommandExecutor;
-import com.zp4rker.zlevels.cmd.RegisterCommand;
-import com.zp4rker.zlevels.db.UserData;
-import com.zp4rker.zlevels.util.Config;
-import com.zp4rker.zlevels.util.LevelsUtil;
-import com.zp4rker.zlevels.util.MessageUtil;
+import com.zp4rker.zlevels.core.cmd.CommandExecutor;
+import com.zp4rker.zlevels.core.cmd.RegisterCommand;
+import com.zp4rker.zlevels.core.db.UserData;
+import com.zp4rker.zlevels.core.config.Config;
+import com.zp4rker.zlevels.core.util.LevelsUtil;
+import com.zp4rker.zlevels.core.util.MessageUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.User;

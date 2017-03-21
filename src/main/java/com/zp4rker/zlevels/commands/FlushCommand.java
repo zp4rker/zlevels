@@ -1,12 +1,12 @@
 package com.zp4rker.zlevels.commands;
 
-import com.zp4rker.zlevels.cmd.CommandExecutor;
-import com.zp4rker.zlevels.cmd.RegisterCommand;
-import com.zp4rker.zlevels.db.UserData;
-import com.zp4rker.zlevels.util.AutoRole;
-import com.zp4rker.zlevels.util.Config;
-import com.zp4rker.zlevels.util.Pruner;
-import com.zp4rker.zlevels.util.ZLogger;
+import com.zp4rker.zlevels.core.cmd.CommandExecutor;
+import com.zp4rker.zlevels.core.cmd.RegisterCommand;
+import com.zp4rker.zlevels.core.db.UserData;
+import com.zp4rker.zlevels.core.util.AutoRole;
+import com.zp4rker.zlevels.core.config.Config;
+import com.zp4rker.zlevels.core.util.Pruner;
+import com.zp4rker.zlevels.core.util.ZLogger;
 import net.dv8tion.jda.core.entities.Message;
 
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class FlushCommand implements CommandExecutor {
             // Get id
             String id = message.getAuthor().getId();
             // Check if sent by OP
-            if (Arrays.stream(Config.OPS).noneMatch(s -> s.equals(id))) return;
+            if (Config.OPS.stream().noneMatch(s -> s.equals(id))) return;
             // Prune members
             Pruner.prune();
             // Force auto role

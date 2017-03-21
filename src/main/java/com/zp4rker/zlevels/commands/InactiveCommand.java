@@ -1,8 +1,8 @@
 package com.zp4rker.zlevels.commands;
 
-import com.zp4rker.zlevels.cmd.CommandExecutor;
-import com.zp4rker.zlevels.cmd.RegisterCommand;
-import com.zp4rker.zlevels.db.UserData;
+import com.zp4rker.zlevels.core.cmd.CommandExecutor;
+import com.zp4rker.zlevels.core.cmd.RegisterCommand;
+import com.zp4rker.zlevels.core.db.UserData;
 import net.dv8tion.jda.core.entities.Message;
 
 import java.util.concurrent.Executors;

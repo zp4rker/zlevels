@@ -8,7 +8,7 @@
 
     <groupId>com.zp4rker</groupId>
     <artifactId>zlevels</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <repositories>
         <repository>
@@ -91,6 +91,30 @@
             <artifactId>json-simple</artifactId>
             <version>LATEST</version>
         </dependency>
+        <!-- SnakeYAML -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <!-- Commons lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <!-- sl4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>LATEST</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -165,7 +189,7 @@
                 <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources</directory>
                 <includes>
-                    <include>*.json</include>
+                    <include>*.yml</include>
                 </includes>
             </resource>
         </resources>
