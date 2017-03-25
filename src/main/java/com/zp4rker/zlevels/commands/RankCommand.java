@@ -27,13 +27,10 @@ public class RankCommand implements CommandExecutor {
                 try {
                     // Get rank from args
                     int rank = Integer.parseInt(args[0]);
-                    // Run asynchronously
-                    Executors.newSingleThreadExecutor().submit(() -> {
-                        // Get userdata
-                        UserData data = UserData.fromRank(rank);
-                        // Send embed
-                        sendEmbed(message.getJDA().getUserById(data.getUserId()), message, data);
-                    });
+                    // Get userdata
+                    UserData data = UserData.fromRank(rank);
+                    // Send embed
+                    sendEmbed(message.getJDA().getUserById(data.getUserId()), message, data);
                 } catch (Exception e) {
                     // Send error
                     MessageUtil.sendError("Invalid arguments!", "Invalid arguments! \nUsage: ```-rank @User``` Or ```" +
@@ -51,22 +48,16 @@ public class RankCommand implements CommandExecutor {
             }
             // Get Mentioned user
             User user = message.getMentionedUsers().get(0);
-            // Run asynchronously
-            Executors.newSingleThreadExecutor().submit(() -> {
-                // Get userdata
-                UserData data = UserData.fromId(message.getMentionedUsers().get(0).getId());
-                // Send emebed
-                sendEmbed(user, message, data);
-            });
+            // Get userdata
+            UserData data = UserData.fromId(message.getMentionedUsers().get(0).getId());
+            // Send emebed
+            sendEmbed(user, message, data);
         } else if (args.length == 0) {
-            Executors.newSingleThreadExecutor().submit(() -> {
-                // Get userdata
-                UserData data = UserData.fromId(message.getAuthor().getId());
-                // Send embed
-                sendEmbed(message.getAuthor(), message, data);
-            });
+            // Get userdata
+            UserData data = UserData.fromId(message.getAuthor().getId());
+            // Send embed
+            sendEmbed(message.getAuthor(), message, data);
         } else {
-            // Send error
             // Send error
             MessageUtil.sendError("Invalid arguments!", "Invalid arguments! \nUsage: ```-rank @User``` Or ```" +
                     "-rank <RankNumber>```", message);

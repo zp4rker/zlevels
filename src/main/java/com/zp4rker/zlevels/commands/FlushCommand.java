@@ -2,15 +2,12 @@ package com.zp4rker.zlevels.commands;
 
 import com.zp4rker.zlevels.core.cmd.CommandExecutor;
 import com.zp4rker.zlevels.core.cmd.RegisterCommand;
+import com.zp4rker.zlevels.core.config.Config;
 import com.zp4rker.zlevels.core.db.UserData;
 import com.zp4rker.zlevels.core.util.AutoRole;
-import com.zp4rker.zlevels.core.config.Config;
 import com.zp4rker.zlevels.core.util.Pruner;
 import com.zp4rker.zlevels.core.util.ZLogger;
 import net.dv8tion.jda.core.entities.Message;
-
-import java.util.Arrays;
-import java.util.concurrent.Executors;
 
 /**
  * @author ZP4RKER
@@ -19,19 +16,16 @@ public class FlushCommand implements CommandExecutor {
 
     @RegisterCommand(aliases = "flush")
     public String onCommand(Message message) {
-        // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
-            // Get id
-            String id = message.getAuthor().getId();
-            // Check if sent by OP
-            if (Config.OPS.stream().noneMatch(s -> s.equals(id))) return;
-            // Prune members
-            Pruner.prune();
-            // Force auto role
-            forceAutoRole();
-            // Save all data
-            saveAllData();
-        });
+        // Get id
+        String id = message.getAuthor().getId();
+        // Check if sent by OP
+        if (Config.OPS.stream().noneMatch(s -> s.equals(id))) return null;
+        // Prune members
+        Pruner.prune();
+        // Force auto role
+        forceAutoRole();
+        // Save all data
+        saveAllData();
         // Return null
         return null;
     }

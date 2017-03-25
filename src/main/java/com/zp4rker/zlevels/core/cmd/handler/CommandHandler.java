@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.hooks.SubscribeEvent;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
 
 /**
  * @author ZP4RKER
@@ -48,8 +49,9 @@ public class CommandHandler {
         if (event.getAuthor().equals(event.getJDA().getSelfUser()) && !annotation.allowSelf()) return;
         // Check for others
         if (!event.getAuthor().equals(event.getJDA().getSelfUser()) && !annotation.allowOthers()) return;
-        // Invoke the method
-        invokeMethod(command, event.getMessage(), getParameters(splitContent, command, event.getMessage(), event.getJDA()));
+        // Invoke the method (async)
+        Executors.newSingleThreadExecutor().submit(() -> invokeMethod(command, event.getMessage(),
+                getParameters(splitContent, command, event.getMessage(), event.getJDA())));
     }
 
     public void registerCommand(CommandExecutor commandExecutor) {
@@ -123,7 +125,8 @@ public class CommandHandler {
     private Object getObjectFromString(JDA jda, String arg) {
         try {
             return Integer.valueOf(arg);
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException e) {
+        }
         if (arg.matches("<@([0-9]*)>")) {
             String id = arg.substring(2, arg.length() - 1);
             User user = jda.getUserById(id);

@@ -2,13 +2,12 @@ package com.zp4rker.zlevels.commands;
 
 import com.zp4rker.zlevels.core.cmd.CommandExecutor;
 import com.zp4rker.zlevels.core.cmd.RegisterCommand;
-import com.zp4rker.zlevels.core.db.UserData;
 import com.zp4rker.zlevels.core.config.Config;
+import com.zp4rker.zlevels.core.db.UserData;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 
 import java.awt.*;
-import java.util.concurrent.Executors;
 
 /**
  * @author ZP4RKER
@@ -17,11 +16,8 @@ public class LeaderboardCommand implements CommandExecutor {
 
     @RegisterCommand(aliases = {"leaderboard", "top"})
     public String onCommand(Message message, String[] args) {
-        // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
-            // Send embed
-            sendEmbed(message, args);
-        });
+        // Send embed
+        sendEmbed(message, args);
         // Return null
         return null;
     }
