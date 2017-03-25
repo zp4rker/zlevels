@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +24,8 @@ public class Config {
     public static String PREFIX = "";
     public static String SERVER = "";
     public static List<String> OPS = Arrays.asList("145064570237485056");
+    public static String EMBED_COLOUR = "";
+    public static String GAME_STATUS = "";
 
     public static String DB_HOST = "";
     public static String DB_PORT = "";
@@ -87,6 +90,7 @@ public class Config {
         } catch (Exception e) {
             // Send warning
             ZLogger.warn("Could not load config!");
+            e.printStackTrace();
             // Return false
             return false;
         }
@@ -98,19 +102,27 @@ public class Config {
         // Get data
         Yaml data = Yaml.loadConfiguration(file);
 
-        // Loop through values
-        for (String key : data.getKeys(true)) {
-            // Check if sub-node
-            if (!key.contains(".")) continue;
-            // Check if empty
-            if (data.getString(key).equals("")) {
+        // Loop through fields
+        for (Field field : Config.class.getDeclaredFields()) {
+            // Get config key
+            String key = getNewKey(field.getName());
+            // Check if key is null
+            if (key == null) continue;
+            // Check if empty or null
+            if (data.getString(key) == null || data.getString(key).isEmpty()) {
+                // Check if GAME_STATUS
+                if (data.getString(key) != null && key.equals("basic-settings.game-status")) continue;
                 // Check if STAFF_ROLE or CHANNELS_FOR_RATINGS
                 if (key.equals("staff-ratings.staff-role") || key.equals("staff-ratings.staff-role")) {
                     // Check if ratings enabled
                     if (!data.getBoolean("staff-ratings.enabled")) continue;
                 }
+                // Create node
+                data.set(key, "");
+                // Save new data
+                data.save(file);
                 // Throw exception
-                throw new ConfigException(new Throwable(key + " can not be empty!"));
+                throw new ConfigException(new Throwable(key));
             }
         }
 
@@ -124,6 +136,10 @@ public class Config {
         SERVER = data.getString("basic-settings.server");
         // Get ops
         OPS = data.getStringList("basic-settings.ops");
+        // Get embed colour
+        EMBED_COLOUR = data.getString("basic-settings.embed-colour");
+        // Get game status
+        GAME_STATUS = data.getString("basic-settings.game-status");
 
         // Get database host
         DB_HOST = data.getString("database.host");
@@ -225,6 +241,10 @@ public class Config {
                 return "basic-settings.prefix";
             case "SERVER":
                 return "basic-settings.server";
+            case "EMBED_COLOUR":
+                return "basic-settings.embed-colour";
+            case "GAME_STATUS":
+                return "basic-settings.game-status";
             case "OPS":
                 return "basic-settings.ops";
             case "DB_HOST":

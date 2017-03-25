@@ -93,7 +93,7 @@ public class RankCommand implements CommandExecutor {
         // Set footer
         embed.setFooter(Config.NAME + " Ranks", message.getJDA().getSelfUser().getEffectiveAvatarUrl());
         // Set colour
-        embed.setColor(Color.decode("#FFD700"));
+        embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Get rank
         int[] rank = data.getRank();
         // Add rank

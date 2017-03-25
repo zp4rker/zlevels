@@ -2,11 +2,13 @@ package com.zp4rker.zlevels.commands;
 
 import com.zp4rker.zlevels.core.cmd.CommandExecutor;
 import com.zp4rker.zlevels.core.cmd.RegisterCommand;
+import com.zp4rker.zlevels.core.config.Config;
 import com.zp4rker.zlevels.core.util.AutoRole;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Message;
 
+import java.awt.*;
 import java.util.concurrent.Executors;
 
 /**
@@ -22,6 +24,8 @@ public class RewardsCommand implements CommandExecutor {
             EmbedBuilder embed = new EmbedBuilder();
             // Set author
             embed.setAuthor("Rewards", null, jda.getSelfUser().getEffectiveAvatarUrl());
+            // Set colour
+            embed.setColor(Color.decode(Config.EMBED_COLOUR));
             // Start content
             String content = "";
             // Loop through roles

@@ -1,16 +1,17 @@
 package com.zp4rker.zlevels.core.yaml.file;
 
+import com.zp4rker.zlevels.core.util.ZLogger;
 import com.zp4rker.zlevels.core.yaml.Configuration;
 import com.zp4rker.zlevels.core.yaml.ConfigurationSection;
 import com.zp4rker.zlevels.core.yaml.InvalidConfigurationException;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.representer.Representer;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
+import java.io.Reader;
 import java.util.Map;
 
 /**
@@ -44,11 +45,8 @@ public class Yaml extends FileConfiguration {
 
         try {
             config.load(file);
-        } catch (FileNotFoundException ex) {
-            Logger.getRootLogger().log(Priority.FATAL, "Cannot load " + file, ex);
-        } catch (IOException ex) {
-        } catch (InvalidConfigurationException ex) {
-            Logger.getRootLogger().log(Priority.FATAL, "Cannot load " + file, ex);
+        } catch (Exception ex) {
+            ZLogger.warn("Cannot load " + file);
         }
 
         return config;
@@ -76,10 +74,8 @@ public class Yaml extends FileConfiguration {
 
         try {
             config.load(stream);
-        } catch (IOException ex) {
-            Logger.getRootLogger().log(Priority.FATAL, "Cannot load yaml from stream", ex);
-        } catch (InvalidConfigurationException ex) {
-            Logger.getRootLogger().log(Priority.FATAL, "Cannot load yaml from stream", ex);
+        } catch (Exception ex) {
+            ZLogger.warn("Cannot load yaml from stream");
         }
 
         return config;
@@ -103,10 +99,8 @@ public class Yaml extends FileConfiguration {
 
         try {
             config.load(reader);
-        } catch (IOException ex) {
-            Logger.getRootLogger().log(Priority.FATAL, "Cannot load yaml from stream", ex);
-        } catch (InvalidConfigurationException ex) {
-            Logger.getRootLogger().log(Priority.FATAL, "Cannot load yaml from stream", ex);
+        } catch (Exception ex) {
+            ZLogger.warn("Cannot load yaml from stream");
         }
 
         return config;

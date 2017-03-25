@@ -21,7 +21,7 @@ public class ZLevels {
     public static CommandHandler handler;
     public static JDA jda;
 
-    public static final String VERSION = "v1.0.3";
+    public static final String VERSION = "v1.0.4";
 
     public static void main(String[] args) {
         // Add blank line

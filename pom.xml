@@ -8,7 +8,7 @@
 
     <groupId>com.zp4rker</groupId>
     <artifactId>zlevels</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <repositories>
         <repository>
@@ -107,12 +107,6 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>LATEST</version>
-        </dependency>
-        <!-- sl4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
             <version>LATEST</version>
         </dependency>
     </dependencies>

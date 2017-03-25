@@ -77,7 +77,7 @@ public class ReactionAddListener {
                 // Check if in server
                 if (!event.getChannel().getType().equals(ChannelType.TEXT)) return;
                 // Check channels
-                if (!Arrays.asList(Config.CHANNELS_FOR_RATINGS).contains(event.getChannel().getId())) return;
+                if (!Config.CHANNELS_FOR_RATINGS.contains(event.getChannel().getId())) return;
                 // Check if bot
                 if (event.getChannel().getMessageById(event.getMessageId()).complete().getAuthor().isBot()) return;
                 // Check if self

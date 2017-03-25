@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.User;
 
+import java.awt.*;
 import java.util.concurrent.Executors;
 
 /**
@@ -71,6 +72,8 @@ public class RatingCommand implements CommandExecutor {
         EmbedBuilder embed = new EmbedBuilder();
         // Set author
         embed.setAuthor(user.getName(), null, user.getEffectiveAvatarUrl());
+        // Set colour
+        embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Compile ratings string
         String ratings = rating.getRatings() + (rating.getRatings() == 1 ? " rating." : " ratings.");
         // Add ratings field

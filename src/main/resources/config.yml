@@ -5,6 +5,8 @@ basic-settings:
     server: ''
     ops:
     - '145064570237485056'
+    embed-colour: '#fbae1d'
+    game-status: ''
 database:
     host: ''
     port: ''

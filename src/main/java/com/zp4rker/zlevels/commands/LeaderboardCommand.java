@@ -32,7 +32,7 @@ public class LeaderboardCommand implements CommandExecutor {
         // Set author
         embed.setAuthor(Config.NAME + " All time leaderboard", null, null);
         // Set colour
-        embed.setColor(Color.decode("#FFD700"));
+        embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Catch errors
         try {
             // Get count

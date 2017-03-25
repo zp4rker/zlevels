@@ -31,7 +31,7 @@ public class ReactionRemoveListener {
                 if (message.getGuild().getMember(message.getAuthor()).getRoles().stream().noneMatch(role -> role
                         .getName().equals(Config.STAFF_ROLE))) return;
                 // Check channels
-                if (!Arrays.asList(Config.CHANNELS_FOR_RATINGS).contains(event.getChannel().getId())) return;
+                if (!Config.CHANNELS_FOR_RATINGS.contains(event.getChannel().getId())) return;
                 // Get rating
                 StaffRating rating = StaffRating.fromId(message.getAuthor().getId());
                 // Check if exists
