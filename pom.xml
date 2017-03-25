@@ -170,7 +170,7 @@
                         <configuration>
                             <target name="copyFiles">
                                 <copy file="${project.build.directory}/${project.build.finalName}.jar"
-                                      tofile="/Users/ZP4RKER/Desktop/Bots/${project.build.finalName}.jar"/>
+                                      tofile="/Users/ZP4RKER/Documents/Development/Bots/${project.build.finalName}.jar"/>
                             </target>
                         </configuration>
                     </execution>
