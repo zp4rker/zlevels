@@ -15,7 +15,9 @@ import java.awt.*;
  */
 public class RewardsCommand implements CommandExecutor {
 
-    @RegisterCommand(aliases = "rewards")
+    @RegisterCommand(aliases = "rewards",
+                    usage = "{prefix}rewards",
+                    description = "Displays the possible rewards from levelling up.")
     public String onCommand(JDA jda, Message message) {
         // Create embed
         EmbedBuilder embed = new EmbedBuilder();

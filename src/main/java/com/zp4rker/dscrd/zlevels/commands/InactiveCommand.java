@@ -12,12 +12,16 @@ public class InactiveCommand implements CommandExecutor {
 
     private int count;
 
-    @RegisterCommand(aliases = "inactive")
+    @RegisterCommand(aliases = "inactive",
+                    usage = "{prefix}inactive",
+                    description = "Displays count of inactive members on the server.")
     public String onCommand(Message message) {
         // Create count
         count = 0;
         // Loop through
         message.getGuild().getMembers().forEach(member -> {
+            // Check if bot
+            if (member.getUser().isBot()) return;
             // Get data
             UserData data = UserData.fromId(member.getUser().getId());
             // Check if exists

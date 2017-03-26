@@ -17,7 +17,9 @@ import java.awt.*;
  */
 public class RankCommand implements CommandExecutor {
 
-    @RegisterCommand(aliases = "rank")
+    @RegisterCommand(aliases = "rank",
+                    usage = "{prefix}rank <@User | Rank#>",
+                    description = "Displays the specified user's rank and XP.")
     public String onCommand(Message message, String[] args) {
         // Check args
         if (args.length >= 1) {

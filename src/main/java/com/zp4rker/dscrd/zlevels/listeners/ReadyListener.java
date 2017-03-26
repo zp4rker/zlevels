@@ -21,6 +21,8 @@ public class ReadyListener {
     public void onReady(ReadyEvent event) {
         // Send info
         ZLogger.info("Registering comands...");
+        // Register help command
+        ZLevels.handler.registerCommand(new HelpCommand());
         // Register rank command
         ZLevels.handler.registerCommand(new RankCommand());
         // Register leaderboard command

@@ -14,7 +14,9 @@ import net.dv8tion.jda.core.entities.Message;
  */
 public class FlushCommand implements CommandExecutor {
 
-    @RegisterCommand(aliases = "flush")
+    @RegisterCommand(aliases = "flush",
+                    usage = "{prefix}flush",
+                    description = "Prunes members, forces auto-role and saves all data.")
     public String onCommand(Message message) {
         // Get id
         String id = message.getAuthor().getId();

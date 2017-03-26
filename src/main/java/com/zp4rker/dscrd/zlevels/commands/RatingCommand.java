@@ -16,18 +16,20 @@ import java.awt.*;
  */
 public class RatingCommand implements CommandExecutor {
 
-    @RegisterCommand(aliases = "rating")
+    @RegisterCommand(aliases = {"rating", "ratings"},
+                    usage = "{prefix}rating @User",
+                    description = "Displays the ratings for the specified staff member.")
     public String onCommand(Message message, String[] args) {
-        // Check if staff
-        if (message.getGuild().getMember(message.getAuthor()).getRoles().stream().noneMatch(role -> role.getName()
-                .equals(Config.STAFF_ROLE))) {
-            // Send error
-            MessageUtil.sendError("Invalid permissions!", "You are not authorised to run that command!", message);
-            // Return null
-            return null;
-        }
         // Check arguments
         if (args.length == 0) {
+            // Check if staff
+            if (message.getGuild().getMember(message.getAuthor()).getRoles().stream().noneMatch(role -> role.getName()
+                    .equals(Config.STAFF_ROLE))) {
+                // Send error
+                MessageUtil.sendError("You are not staff!", "Only staff members have ratings.", message);
+                // Return null
+                return null;
+            }
             // Get user
             User user = message.getAuthor();
             // Send embed
@@ -43,6 +45,14 @@ public class RatingCommand implements CommandExecutor {
             }
             // Get user
             User user = message.getMentionedUsers().get(0);
+            // Check if staff
+            if (message.getGuild().getMember(message.getAuthor()).getRoles().stream().noneMatch(role -> role.getName()
+                    .equals(Config.STAFF_ROLE))) {
+                // Send error
+                MessageUtil.sendError("That member is not staff!", "Only staff members have ratings.", message);
+                // Return null
+                return null;
+            }
             // Send embed
             sendEmbed(user, message);
         } else {

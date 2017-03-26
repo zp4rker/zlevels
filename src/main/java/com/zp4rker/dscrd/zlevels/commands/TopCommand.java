@@ -14,7 +14,9 @@ import java.awt.*;
  */
 public class TopCommand implements CommandExecutor {
 
-    @RegisterCommand(aliases = {"top", "leaderboard"})
+    @RegisterCommand(aliases = {"top", "leaderboard"},
+                    usage = "{prefix}top <Amount to list>",
+                    description = "Displays the top users to the specified amount.")
     public String onCommand(Message message, String[] args) {
         // Send embed
         sendEmbed(message, args);
