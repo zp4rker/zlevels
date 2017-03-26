@@ -5,7 +5,6 @@ import com.zp4rker.zlevels.commands.*;
 import com.zp4rker.zlevels.core.config.Config;
 import com.zp4rker.zlevels.core.db.Database;
 import com.zp4rker.zlevels.core.db.StaffRating;
-import com.zp4rker.zlevels.core.util.AutoRole;
 import com.zp4rker.zlevels.core.util.ZLogger;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.ReadyEvent;
@@ -25,7 +24,7 @@ public class ReadyListener {
         // Register rank command
         ZLevels.handler.registerCommand(new RankCommand());
         // Register leaderboard command
-        ZLevels.handler.registerCommand(new LeaderboardCommand());
+        ZLevels.handler.registerCommand(new TopCommand());
         // Register rating command
         ZLevels.handler.registerCommand(new RatingCommand());
         // Register rewards command

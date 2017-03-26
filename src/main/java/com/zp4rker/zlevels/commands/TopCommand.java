@@ -12,9 +12,9 @@ import java.awt.*;
 /**
  * @author ZP4RKER
  */
-public class LeaderboardCommand implements CommandExecutor {
+public class TopCommand implements CommandExecutor {
 
-    @RegisterCommand(aliases = {"leaderboard", "top"})
+    @RegisterCommand(aliases = {"top", "leaderboard"})
     public String onCommand(Message message, String[] args) {
         // Send embed
         sendEmbed(message, args);
@@ -42,10 +42,17 @@ public class LeaderboardCommand implements CommandExecutor {
             // Set description
             embed.setDescription(desc);
         } catch (Exception e) {
+            // Set count to 10
+            int count = 10;
+            // Check if less than 10
+            if (UserData.getAllData().size() < 10) {
+                // Set to total
+                count = UserData.getAllData().size();
+            }
             // Set footer
-            embed.setFooter("Top 10", message.getJDA().getSelfUser().getAvatarUrl());
+            embed.setFooter("Top " + count, message.getJDA().getSelfUser().getAvatarUrl());
             // Compile description
-            String desc = compileBoard(10, message);
+            String desc = compileBoard(count, message);
             // Set description
             embed.setDescription(desc);
         }
