@@ -152,7 +152,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.zp4rker.zlevels.ZLevels</mainClass>
+                            <mainClass>com.zp4rker.dscrd.zlevels.ZLevels</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
