@@ -72,10 +72,10 @@ public class StaffRating {
                 ConnectionSource source = Database.getConnection();
                 // Get the Dao
                 Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-                // Save the record
-                db.createOrUpdate(current);
                 // Close the connection
                 source.close();
+                // Save the record
+                db.createOrUpdate(current);
             } catch (Exception e) {
                 // Send warning
                 ZLogger.warn("Could not save StaffRating for " + getUserId() + "!");
@@ -93,10 +93,10 @@ public class StaffRating {
                 ConnectionSource source = Database.getConnection();
                 // Get the Dao
                 Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-                // Save the record
-                db.delete(current);
                 // Close the connection
                 source.close();
+                // Save the record
+                db.delete(current);
                 // Send info
                 ZLogger.info("Successfully deleted StaffRating of " + getUserId() + ".");
             } catch (Exception e) {
@@ -121,10 +121,10 @@ public class StaffRating {
             ConnectionSource source = Database.getConnection();
             // Get the Dao
             Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-            // Search
-            data = db.queryForEq("userId", id).get(0);
             // Close connection
             source.close();
+            // Search
+            data = db.queryForEq("userId", id).get(0);
         } catch (Exception e) {
             // Send warning
             ZLogger.warn("Could not get UserData for " + id + "!");
@@ -139,10 +139,10 @@ public class StaffRating {
             ConnectionSource source = Database.getConnection();
             // Get the Dao
             Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-            // Get list of data
-            List<StaffRating> dataList = db.queryForAll();
             // Close the source
             source.close();
+            // Get list of data
+            List<StaffRating> dataList = db.queryForAll();
             // Sort list
             dataList.sort((data1, data2) -> {
                 // Check if equal
