@@ -6,6 +6,7 @@ import com.zp4rker.dscrd.zlevels.core.config.Config;
 import com.zp4rker.dscrd.zlevels.core.db.UserData;
 import com.zp4rker.dscrd.core.logger.ZLogger;
 import com.zp4rker.dscrd.zlevels.core.util.AutoRole;
+import com.zp4rker.dscrd.zlevels.core.util.LevelsUtil;
 import com.zp4rker.dscrd.zlevels.core.util.Pruner;
 import net.dv8tion.jda.core.entities.Message;
 
@@ -22,12 +23,22 @@ public class FlushCommand implements CommandExecutor {
         String id = message.getAuthor().getId();
         // Check if sent by OP
         if (Config.OPS.stream().noneMatch(s -> s.equals(id))) return null;
-        // Prune members
-        Pruner.prune();
         // Force auto role
         forceAutoRole();
         // Save all data
         saveAllData();
+        // Prune data
+        Pruner.prune();
+        // Loop through first page
+        for (UserData data : LevelsUtil.getPage(0)) {
+            // Send debug
+            ZLogger.debug("data: " + data.getUsername());
+        }
+        // Loop through fifth page
+        for (UserData data : LevelsUtil.getPage(4)) {
+            // Send debug
+            ZLogger.debug("data: " + data.getUsername());
+        }
         // Return null
         return null;
     }

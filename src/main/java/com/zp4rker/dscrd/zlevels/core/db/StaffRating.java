@@ -72,10 +72,10 @@ public class StaffRating {
                 ConnectionSource source = Database.getConnection();
                 // Get the Dao
                 Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-                // Close the connection
-                source.close();
                 // Save the record
                 db.createOrUpdate(current);
+                // Close connection
+                Database.closeConnection();
             } catch (Exception e) {
                 // Send warning
                 ZLogger.warn("Could not save StaffRating for " + getUserId() + "!");
@@ -93,12 +93,10 @@ public class StaffRating {
                 ConnectionSource source = Database.getConnection();
                 // Get the Dao
                 Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-                // Close the connection
-                source.close();
                 // Save the record
                 db.delete(current);
-                // Send info
-                ZLogger.info("Successfully deleted StaffRating of " + getUserId() + ".");
+                // Close connection
+                Database.closeConnection();
             } catch (Exception e) {
                 // Send warning
                 ZLogger.warn("Could not delete StaffRating of " + getUserId() + "!");
@@ -121,10 +119,10 @@ public class StaffRating {
             ConnectionSource source = Database.getConnection();
             // Get the Dao
             Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-            // Close connection
-            source.close();
             // Search
             data = db.queryForEq("userId", id).get(0);
+            // Close connection
+            Database.closeConnection();
         } catch (Exception e) {
             // Send warning
             ZLogger.warn("Could not get UserData for " + id + "!");
@@ -139,8 +137,6 @@ public class StaffRating {
             ConnectionSource source = Database.getConnection();
             // Get the Dao
             Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-            // Close the source
-            source.close();
             // Get list of data
             List<StaffRating> dataList = db.queryForAll();
             // Sort list
@@ -150,6 +146,8 @@ public class StaffRating {
                 // Return higher value
                 return data1.getRatings() < data2.getRatings() ? 1 : -1;
             });
+            // Close connection
+            Database.closeConnection();
             // Return list
             return dataList;
         } catch (Exception e) {

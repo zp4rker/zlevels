@@ -1,5 +1,9 @@
 package com.zp4rker.dscrd.zlevels.core.util;
 
+import com.zp4rker.dscrd.zlevels.core.db.UserData;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -61,6 +65,31 @@ public class LevelsUtil {
         Random random = new Random();
         // Return random int between 10 and 30
         return random.nextInt((max - min) + 1) + min;
+    }
+
+    public static int getPageCount() {
+        // Return whole count divided by 10
+        return UserData.getAllData().size() / 10;
+    }
+
+    public static List<UserData> getPage(int index) {
+        // Get whole list
+        List<UserData> wholeList = UserData.getAllData();
+        // Get ending point
+        int end = (index + 1) * 10;
+        // Create new list
+        List<UserData> dataList = new ArrayList<>();
+        // Loop through
+        for (int i = (index * 10); i < end; i++) {
+            // Check if first loop and more than 0
+            if (i == index * 10 && i > 0) {
+                i--;
+            }
+            // Add to list
+            dataList.add(wholeList.get(i));
+        }
+        // Return new list
+        return dataList;
     }
 
 }

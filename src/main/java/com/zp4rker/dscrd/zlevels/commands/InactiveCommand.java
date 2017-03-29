@@ -22,10 +22,15 @@ public class InactiveCommand implements CommandExecutor {
         message.getGuild().getMembers().forEach(member -> {
             // Check if bot
             if (member.getUser().isBot()) return;
-            // Get data
-            UserData data = UserData.fromId(member.getUser().getId());
-            // Check if exists
-            if (data == null) count++;
+            // Catch errors
+            try {
+                // Get data
+                UserData data = UserData.fromId(member.getUser().getId());
+                // Check if exists
+                if (data == null) count++;
+            } catch (Exception e) {
+                // No data
+            }
         });
         // Send message
         message.getTextChannel().sendMessage("There are " + count + " inactive " + (count == 1 ? "user" : "users") +

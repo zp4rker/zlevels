@@ -40,6 +40,10 @@ public class UserData {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -130,13 +134,14 @@ public class UserData {
                 ConnectionSource source = Database.getConnection();
                 // Get the Dao
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-                // Close the connection
-                source.close();
                 // Save the record
                 db.createOrUpdate(current);
+                // Close connection
+                Database.closeConnection();
             } catch (Exception e) {
                 // Send warning
                 ZLogger.warn("Could not save UserData for " + getUserId() + "!");
+                e.printStackTrace();
             }
         });
     }
@@ -151,10 +156,10 @@ public class UserData {
                 ConnectionSource source = Database.getConnection();
                 // Get the Dao
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-                // Close the connection
-                source.close();
                 // Delete the record
                 db.delete(current);
+                // Close connection
+                Database.closeConnection();
             } catch (Exception e) {
                 // Send warning
                 ZLogger.warn("Colud not delete UserData for " + getUserId() + "!");
@@ -177,11 +182,16 @@ public class UserData {
             ConnectionSource source = Database.getConnection();
             // Get the Dao
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-            // Close connection
-            source.close();
             // Search
             data = db.queryForEq("userId", id).get(0);
+            // Close connection
+            Database.closeConnection();
         } catch (Exception e) {
+            // Check if array error
+            if (e instanceof IndexOutOfBoundsException) {
+                // Return null
+                return null;
+            }
             // Send warning
             ZLogger.warn("Could not get UserData for " + id + "!");
         }
@@ -195,8 +205,6 @@ public class UserData {
             ConnectionSource source = Database.getConnection();
             // Get the Dao
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-            // Close the source
-            source.close();
             // Get list of data
             List<UserData> dataList = db.queryForAll();
             // Sort list
@@ -206,6 +214,8 @@ public class UserData {
                 // Return higher value
                 return data1.getTotalXp() < data2.getTotalXp() ? 1 : -1;
             });
+            // Close connection
+            Database.closeConnection();
             // Return list
             return dataList;
         } catch (Exception e) {
