@@ -1,5 +1,6 @@
 package com.zp4rker.dscrd.zlevels.core.util;
 
+import com.zp4rker.dscrd.core.logger.ZLogger;
 import com.zp4rker.dscrd.zlevels.core.db.UserData;
 
 import java.util.ArrayList;
@@ -83,7 +84,10 @@ public class LevelsUtil {
         for (int i = (index * 10); i < end; i++) {
             // Check if first loop and more than 0
             if (i == index * 10 && i > 0) {
-                i--;
+                // Add to list
+                dataList.add(wholeList.get(i - 1));
+                // End loop
+                continue;
             }
             // Add to list
             dataList.add(wholeList.get(i));

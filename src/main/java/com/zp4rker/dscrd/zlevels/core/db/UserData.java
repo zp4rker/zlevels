@@ -102,7 +102,7 @@ public class UserData {
         // Check if new level
         if (level > this.level) {
             // Send info
-            ZLogger.info(getUserId() + " just levelled up to " + level + "!");
+            ZLogger.info(getUsername() + " just levelled up to level " + level + "!");
             // Get User
             User user = ZLevels.jda.getUserById(getUserId());
             // Catch errors
