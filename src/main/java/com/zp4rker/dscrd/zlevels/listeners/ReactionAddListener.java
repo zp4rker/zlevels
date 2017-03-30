@@ -134,9 +134,17 @@ public class ReactionAddListener {
             int newPage = 0;
             // Check if correct reaction
             if (event.getReaction().getEmote().getName().equals("\u27A1") ||
-                event.getReaction().getEmote().getName().equals("\u2B05")) {
+                event.getReaction().getEmote().getName().equals("\u2B05") ||
+                event.getReaction().getEmote().getName().equals("\u274C")) {
                 // Get if next or prev
                 boolean next = event.getReaction().getEmote().getName().equals("\u27A1");
+                // Check if delete
+                if (event.getReaction().getEmote().getName().equals("\u274C")) {
+                    // Delete message
+                    message.delete().complete();
+                    // Return
+                    return;
+                }
                 // Get page
                 int page = Integer.parseInt(embed.getFooter().getText().replace("Top Members - Page ", ""));
                 // Check if next

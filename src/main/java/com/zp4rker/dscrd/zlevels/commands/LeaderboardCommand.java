@@ -1,6 +1,5 @@
 package com.zp4rker.dscrd.zlevels.commands;
 
-import com.j256.ormlite.stmt.query.In;
 import com.zp4rker.dscrd.core.cmd.CommandExecutor;
 import com.zp4rker.dscrd.core.cmd.RegisterCommand;
 import com.zp4rker.dscrd.zlevels.core.config.Config;
@@ -31,6 +30,8 @@ public class LeaderboardCommand implements CommandExecutor {
             // Add reactions (page 1)
             resetReactions(newMessage, 1);
         }
+        // Delete old message
+        message.delete().complete();
         // Return null
         return null;
     }
@@ -95,6 +96,8 @@ public class LeaderboardCommand implements CommandExecutor {
         }
         // Add next button
         message.addReaction("\u27A1").complete();
+        // Add delete button
+        message.addReaction("\u274C").complete();
     }
 
 }
