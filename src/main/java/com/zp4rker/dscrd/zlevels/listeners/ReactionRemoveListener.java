@@ -1,5 +1,6 @@
 package com.zp4rker.dscrd.zlevels.listeners;
 
+import com.zp4rker.dscrd.zlevels.ZLevels;
 import com.zp4rker.dscrd.zlevels.core.config.Config;
 import com.zp4rker.dscrd.zlevels.core.db.StaffRating;
 import com.zp4rker.dscrd.core.logger.ZLogger;
@@ -17,7 +18,7 @@ public class ReactionRemoveListener {
     @SubscribeEvent
     public void onReactionRemove(MessageReactionRemoveEvent event) {
         // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
+        ZLevels.async.submit(() -> {
             // Check if ratings enabled
             if (!Config.RATINGS_ENABLED) return;
             // Catch errors

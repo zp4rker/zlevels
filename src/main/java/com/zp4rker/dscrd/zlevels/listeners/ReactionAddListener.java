@@ -1,5 +1,7 @@
 package com.zp4rker.dscrd.zlevels.listeners;
 
+import com.zp4rker.dscrd.zlevels.ZLevels;
+import com.zp4rker.dscrd.zlevels.commands.LeaderboardCommand;
 import com.zp4rker.dscrd.zlevels.core.db.StaffRating;
 import com.zp4rker.dscrd.zlevels.core.db.UserData;
 import com.zp4rker.dscrd.zlevels.core.config.Config;
@@ -21,8 +23,9 @@ public class ReactionAddListener {
 
     @SubscribeEvent
     public void onReaction(MessageReactionAddEvent event) {
-        // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
+        // Add XP
+        ZLevels.async.submit(() -> {
+            // Catch errors
             try {
                 // Check if in server
                 if (!event.getChannel().getType().equals(ChannelType.TEXT)) return;
@@ -68,8 +71,8 @@ public class ReactionAddListener {
                 ZLogger.warn("Could not handle ReactionAddEvent correctly!");
             }
         });
-        // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
+        // Add staff rating
+        ZLevels.async.submit(() -> {
             // Check if ratings enabled
             if (!Config.RATINGS_ENABLED) return;
             // Catch errors
@@ -112,6 +115,47 @@ public class ReactionAddListener {
                 // Send warning
                 ZLogger.warn("Could not handle ReactionAddEvent correctly!");
             }
+        });
+        // Leaderboard controls
+        ZLevels.async.submit(() -> {
+            // Get message
+            Message message = event.getChannel().getMessageById(event.getMessageId()).complete();
+            // Check if self
+            if (event.getUser().getId().equals(event.getJDA().getSelfUser().getId())) return;
+            // Check if message is embed
+            if (message.getEmbeds().size() != 1) return;
+            // Get embed
+            MessageEmbed embed = message.getEmbeds().get(0);
+            // Check if sent by self
+            if (!message.getAuthor().getId().equals(event.getJDA().getSelfUser().getId()))
+            // Check if leaderboard embed
+            if (!embed.getFooter().getText().contains("Page")) return;
+            // Set new page to 0
+            int newPage = 0;
+            // Check if correct reaction
+            if (event.getReaction().getEmote().getName().equals("\u27A1") ||
+                event.getReaction().getEmote().getName().equals("\u2B05")) {
+                // Get if next or prev
+                boolean next = event.getReaction().getEmote().getName().equals("\u27A1");
+                // Get page
+                int page = Integer.parseInt(embed.getFooter().getText().replace("Top Members - Page ", ""));
+                // Check if next
+                if (next) {
+                    // Increment page
+                    page++;
+                } else {
+                    // Decrement page
+                    page--;
+                }
+                // Get embed
+                MessageEmbed newEmbed = LeaderboardCommand.compileEmbed(message, new String[] {page + ""});
+                // Edit message
+                message.editMessage(newEmbed).complete();
+                // Set new page
+                newPage = page;
+            }
+            // Reset reactions
+            LeaderboardCommand.resetReactions(message, newPage);
         });
     }
 

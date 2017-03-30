@@ -1,5 +1,6 @@
 package com.zp4rker.dscrd.zlevels.commands;
 
+import com.j256.ormlite.stmt.query.In;
 import com.zp4rker.dscrd.core.cmd.CommandExecutor;
 import com.zp4rker.dscrd.core.cmd.RegisterCommand;
 import com.zp4rker.dscrd.zlevels.core.config.Config;
@@ -7,6 +8,7 @@ import com.zp4rker.dscrd.zlevels.core.db.UserData;
 import com.zp4rker.dscrd.zlevels.core.util.LevelsUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 
 import java.awt.*;
 
@@ -16,16 +18,24 @@ import java.awt.*;
 public class LeaderboardCommand implements CommandExecutor {
 
     @RegisterCommand(aliases = {"leaderboard", "lb"},
-                    usage = "{prefix}top <Amount to list>",
-                    description = "Displays the top users to the specified amount.")
+                    usage = "{prefix}leaderboard <Page #>",
+                    description = "Displays the specified page of top members.")
     public String onCommand(Message message, String[] args) {
         // Send embed
-        sendEmbed(message, args);
+        Message newMessage = message.getChannel().sendMessage(compileEmbed(message, args)).complete();
+        // Catch errors
+        try {
+            // Add reactions
+            resetReactions(newMessage, Integer.parseInt(args[0]));
+        } catch (Exception e) {
+            // Add reactions (page 1)
+            resetReactions(newMessage, 1);
+        }
         // Return null
         return null;
     }
 
-    private void sendEmbed(Message message, String[] args) {
+    public static MessageEmbed compileEmbed(Message message, String[] args) {
         // Create embed
         EmbedBuilder embed = new EmbedBuilder();
         // Set author
@@ -52,11 +62,11 @@ public class LeaderboardCommand implements CommandExecutor {
             // Set description
             embed.setDescription(desc);
         }
-        // Send embed
-        message.getChannel().sendMessage(embed.build()).complete();
+        // Return embed
+        return embed.build();
     }
 
-    private String compileBoard(int index, Message message) {
+    private static String compileBoard(int index, Message message) {
         // Compile description
         StringBuilder desc = new StringBuilder();
         // Loop through until count
@@ -73,6 +83,18 @@ public class LeaderboardCommand implements CommandExecutor {
                     .append("\n\n");
         }
         return desc.toString();
+    }
+
+    public static void resetReactions(Message message, int page) {
+        // Remove all reactions
+        message.clearReactions().complete();
+        // Check if above 1
+        if (page > 1) {
+            // Add previous button
+            message.addReaction("\u2B05").complete();
+        }
+        // Add next button
+        message.addReaction("\u27A1").complete();
     }
 
 }

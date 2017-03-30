@@ -1,5 +1,6 @@
 package com.zp4rker.dscrd.zlevels.listeners;
 
+import com.zp4rker.dscrd.zlevels.ZLevels;
 import com.zp4rker.dscrd.zlevels.core.config.Config;
 import com.zp4rker.dscrd.zlevels.core.db.UserData;
 import com.zp4rker.dscrd.zlevels.core.util.LevelsUtil;
@@ -32,7 +33,7 @@ public class MessageSendListener {
             // Check if command
             if (event.getMessage().getContent().startsWith("-")) return;
             // Run asynchronously
-            Executors.newSingleThreadExecutor().submit(() -> {
+            ZLevels.async.submit(() -> {
                 // Get data
                 UserData data = UserData.fromId(event.getAuthor().getId());
                 // Check if exists

@@ -12,6 +12,8 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.hooks.AnnotatedEventManager;
 
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author ZP4RKER
@@ -20,6 +22,8 @@ public class ZLevels {
 
     public static CommandHandler handler;
     public static JDA jda;
+
+    public static ExecutorService async = Executors.newCachedThreadPool();
 
     public static final String VERSION = "v1.0.7";
 

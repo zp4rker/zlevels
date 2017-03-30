@@ -62,7 +62,7 @@ public class ReadyListener {
             });
         }
         // Run asynchonously
-        Executors.newSingleThreadExecutor().submit(() -> {
+        ZLevels.async.submit(() -> {
             // Load DB
             Database.load();
             // Start StaffRating month

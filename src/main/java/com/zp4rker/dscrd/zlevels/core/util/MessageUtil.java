@@ -1,5 +1,6 @@
 package com.zp4rker.dscrd.zlevels.core.util;
 
+import com.zp4rker.dscrd.zlevels.ZLevels;
 import com.zp4rker.dscrd.zlevels.core.config.Config;
 import com.zp4rker.dscrd.core.logger.ZLogger;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -16,7 +17,7 @@ import java.util.concurrent.Executors;
 public class MessageUtil {
 
     public static void sendError(String error, String errorMessage, Message message) {
-        Executors.newSingleThreadExecutor().submit(() -> {
+        ZLevels.async.submit(() -> {
             try {
                 // Send the embed
                 Message futureMessage = message.getChannel().sendMessage(new EmbedBuilder().setFooter(error, null)

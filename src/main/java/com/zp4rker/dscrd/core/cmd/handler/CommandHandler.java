@@ -2,6 +2,7 @@ package com.zp4rker.dscrd.core.cmd.handler;
 
 import com.zp4rker.dscrd.core.cmd.CommandExecutor;
 import com.zp4rker.dscrd.core.cmd.RegisterCommand;
+import com.zp4rker.dscrd.zlevels.ZLevels;
 import com.zp4rker.dscrd.zlevels.core.config.Config;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.*;
@@ -50,7 +51,7 @@ public class CommandHandler {
         // Check for others
         if (!event.getAuthor().equals(event.getJDA().getSelfUser()) && !annotation.allowOthers()) return;
         // Invoke the method (async)
-        Executors.newSingleThreadExecutor().submit(() -> invokeMethod(command, event.getMessage(),
+        ZLevels.async.submit(() -> invokeMethod(command, event.getMessage(),
                 getParameters(splitContent, command, event.getMessage(), event.getJDA())));
     }
 

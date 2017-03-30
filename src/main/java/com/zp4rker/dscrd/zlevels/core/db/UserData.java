@@ -128,7 +128,7 @@ public class UserData {
         // Update username
         current.setUsername(current.getUsername());
         // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
+        ZLevels.async.submit(() -> {
             try {
                 // Get the connection
                 ConnectionSource source = Database.getConnection();
@@ -149,7 +149,7 @@ public class UserData {
         // Get current data
         UserData current = this;
         // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
+        ZLevels.async.submit(() -> {
             try {
                 // Get the connection
                 ConnectionSource source = Database.getConnection();

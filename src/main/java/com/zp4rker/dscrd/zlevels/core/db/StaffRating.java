@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
+import com.zp4rker.dscrd.zlevels.ZLevels;
 import com.zp4rker.dscrd.zlevels.core.config.Config;
 import com.zp4rker.dscrd.core.logger.ZLogger;
 
@@ -66,7 +67,7 @@ public class StaffRating {
         // Get current data
         StaffRating current = this;
         // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
+        ZLevels.async.submit(() -> {
             try {
                 // Get the connection
                 ConnectionSource source = Database.getConnection();
@@ -87,7 +88,7 @@ public class StaffRating {
         // Get current data
         StaffRating current = this;
         // Run asynchronously
-        Executors.newSingleThreadExecutor().submit(() -> {
+        ZLevels.async.submit(() -> {
             try {
                 // Get the connection
                 ConnectionSource source = Database.getConnection();
