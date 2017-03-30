@@ -141,7 +141,6 @@ public class UserData {
             } catch (Exception e) {
                 // Send warning
                 ZLogger.warn("Could not save UserData for " + getUserId() + "!");
-                e.printStackTrace();
             }
         });
     }

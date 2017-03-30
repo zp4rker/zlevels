@@ -76,21 +76,23 @@ public class LevelsUtil {
     public static List<UserData> getPage(int index) {
         // Get whole list
         List<UserData> wholeList = UserData.getAllData();
-        // Get ending point
-        int end = (index + 1) * 10;
+        // Re-evaluate index
+        index = (index - 1) * 10;
         // Create new list
         List<UserData> dataList = new ArrayList<>();
         // Loop through
-        for (int i = (index * 10); i < end; i++) {
+        for (int i = 0; i < 10; i++) {
             // Check if first loop and more than 0
             if (i == index * 10 && i > 0) {
                 // Add to list
-                dataList.add(wholeList.get(i - 1));
+                dataList.add(wholeList.get(index - 1));
                 // End loop
                 continue;
             }
             // Add to list
-            dataList.add(wholeList.get(i));
+            dataList.add(wholeList.get(index));
+            // Increment index
+            index++;
         }
         // Return new list
         return dataList;

@@ -13,9 +13,9 @@ import java.awt.*;
 /**
  * @author ZP4RKER
  */
-public class TopCommand implements CommandExecutor {
+public class LeaderboardCommand implements CommandExecutor {
 
-    @RegisterCommand(aliases = "top",
+    @RegisterCommand(aliases = {"leaderboard", "lb"},
                     usage = "{prefix}top <Amount to list>",
                     description = "Displays the top users to the specified amount.")
     public String onCommand(Message message, String[] args) {
@@ -34,28 +34,21 @@ public class TopCommand implements CommandExecutor {
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Catch errors
         try {
-            // Get count
-            int count = Integer.parseInt(args[0]);
+            // Get index
+            int index = Integer.parseInt(args[0]);
             // Check count
-            if (count > 50) throw new Exception();
+            if (index > LevelsUtil.getPageCount() || index < 1) throw new Exception();
             // Set footer
-            embed.setFooter("Top " + count, message.getJDA().getSelfUser().getAvatarUrl());
+            embed.setFooter("Top Members - Page " + index, message.getJDA().getSelfUser().getAvatarUrl());
             // Compile description
-            String desc = compileBoard(count, message);
+            String desc = compileBoard(index, message);
             // Set description
             embed.setDescription(desc);
         } catch (Exception e) {
-            // Set count to 10
-            int count = 10;
-            // Check if less than 10
-            if (UserData.getAllData().size() < 10) {
-                // Set to total
-                count = UserData.getAllData().size();
-            }
             // Set footer
-            embed.setFooter("Top " + count, message.getJDA().getSelfUser().getAvatarUrl());
+            embed.setFooter("Top Members - Page 1", message.getJDA().getSelfUser().getAvatarUrl());
             // Compile description
-            String desc = compileBoard(count, message);
+            String desc = compileBoard(1, message);
             // Set description
             embed.setDescription(desc);
         }
@@ -63,26 +56,23 @@ public class TopCommand implements CommandExecutor {
         message.getChannel().sendMessage(embed.build()).complete();
     }
 
-    private String compileBoard(int count, Message message) {
+    private String compileBoard(int index, Message message) {
         // Compile description
-        String desc = "";
+        StringBuilder desc = new StringBuilder();
         // Loop through until count
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < 10; i++) {
             // Get data
-            UserData data = UserData.getAllData().get(i);
+            UserData data = LevelsUtil.getPage(index).get(i);
             // Add rank #
-            desc += "**" + (i + 1) + "**. " + (i < 10 ? " " : "");
-            // Add user name
-            desc += message.getGuild().getMemberById(data.getUserId()).getAsMention();
-            // Add level
-            desc += " (Lvl. " + data.getLevel() + ")";
-            // Check if last
-            if ((i + 1) != count) {
-                // Add new line
-                desc += "\n\n";
-            }
+            desc.append("**" + data.getRank()[0] + "**. " + (i < 10 ? " " : ""))
+                    // Add user name
+                    .append(message.getGuild().getMemberById(data.getUserId()).getAsMention())
+                    // Add level
+                    .append(" (Lvl. " + data.getLevel() + ")")
+                    // Add new line
+                    .append("\n\n");
         }
-        return desc;
+        return desc.toString();
     }
 
 }

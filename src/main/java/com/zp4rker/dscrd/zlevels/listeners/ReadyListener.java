@@ -25,8 +25,10 @@ public class ReadyListener {
         ZLevels.handler.registerCommand(new HelpCommand());
         // Register rank command
         ZLevels.handler.registerCommand(new RankCommand());
-        // Register leaderboard command
+        // Register top command
         ZLevels.handler.registerCommand(new TopCommand());
+        // Register leaderboard command
+        ZLevels.handler.registerCommand(new LeaderboardCommand());
         // Register rating command
         ZLevels.handler.registerCommand(new RatingCommand());
         // Register rewards command
