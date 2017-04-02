@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 @DatabaseTable(tableName = "USER_DATA")
 public class UserData {
 
-    @DatabaseField(uniqueIndex = true, canBeNull = false) private String userId;
+    @DatabaseField(id = true, unique = true, canBeNull = false) private String userId;
 
     @DatabaseField(canBeNull = false) private String username;
 
@@ -131,6 +131,7 @@ public class UserData {
             } catch (Exception e) {
                 // Send warning
                 ZLogger.warn("Could not save UserData for " + getUserId() + "!");
+                e.printStackTrace();
             }
         });
     }
@@ -172,7 +173,7 @@ public class UserData {
             // Get the Dao
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
             // Search
-            data = db.queryForEq("userId", id).get(0);
+            data = db.queryForId(id);
             // Close connection
             Database.closeConnection();
         } catch (Exception e) {
@@ -183,6 +184,7 @@ public class UserData {
             }
             // Send warning
             ZLogger.warn("Could not get UserData for " + id + "!");
+            e.printStackTrace();
         }
         // Return data
         return data;
