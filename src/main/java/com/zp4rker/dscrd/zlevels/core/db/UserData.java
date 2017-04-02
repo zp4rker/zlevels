@@ -21,9 +21,7 @@ import java.util.concurrent.Executors;
 @DatabaseTable(tableName = "USER_DATA")
 public class UserData {
 
-    @DatabaseField(generatedId = true, unique = true) private int id;
-
-    @DatabaseField(canBeNull = false, unique = true) private String userId;
+    @DatabaseField(uniqueIndex = true, canBeNull = false) private String userId;
 
     @DatabaseField(canBeNull = false) private String username;
 
@@ -35,14 +33,6 @@ public class UserData {
 
     // Temp data
     private static UserData data = null;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUserId() {
         return userId;
