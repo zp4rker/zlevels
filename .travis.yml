@@ -4,3 +4,10 @@ dist: trusty
 jdk:
 - openjdk8
 script: mvn clean package
+deploy:
+  provider: releases
+  api_key: "a4568ce087b27cb304e36797e925b0db838f6f89 "
+  file: "FILE TO UPLOAD"
+  skip_cleanup: true
+  on:
+    tags: true
