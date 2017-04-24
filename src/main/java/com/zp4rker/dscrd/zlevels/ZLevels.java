@@ -58,12 +58,12 @@ public class ZLevels {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Config.TOKEN)
                     .setEventManager(new AnnotatedEventManager()) // Use Annotation event manager
-                    .addListener(new ReadyListener()) // Ready listeners
-                    .addListener(handler) // Command handler
-                    .addListener(new MessageSendListener()) // Message send listeners
-                    .addListener(new MemberLeaveListener()) // Member leave listeners
-                    .addListener(new ReactionAddListener()) // Reaction add listeners
-                    .addListener(new ReactionRemoveListener()) // Reaction remove listner
+                    .addEventListener(new ReadyListener()) // Ready listeners
+                    .addEventListener(handler) // Command handler
+                    .addEventListener(new MessageSendListener()) // Message send listeners
+                    .addEventListener(new MemberLeaveListener()) // Member leave listeners
+                    .addEventListener(new ReactionAddListener()) // Reaction add listeners
+                    .addEventListener(new ReactionRemoveListener()) // Reaction remove listner
                     .buildBlocking();
         } catch (Exception e) {
             // Send error

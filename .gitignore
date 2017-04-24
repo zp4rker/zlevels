@@ -3,3 +3,4 @@
 out/
 *.iml
 target/
+copy_file.xml
