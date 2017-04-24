@@ -1,0 +1,6 @@
+.DS_Store
+.idea/
+out/
+*.iml
+target/
+copy_file.xml

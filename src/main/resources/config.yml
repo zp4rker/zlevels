@@ -1,0 +1,22 @@
+basic-settings:
+    name: ''
+    token: ''
+    prefix: ''
+    server: ''
+    ops:
+    - '145064570237485056'
+    embed-colour: '#fbae1d'
+    game-status: ''
+database:
+    host: ''
+    port: ''
+    name: ''
+    user: ''
+    pass: ''
+more-settings:
+    error-length: 600
+    autorole-enabled: true
+staff-ratings:
+    enabled: true
+    staff-role: ''
+    channels: []
