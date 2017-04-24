@@ -2,5 +2,8 @@ language: java
 sudo: required
 dist: trusty
 jdk:
-  - openjdk8
+- openjdk8
 script: mvn clean package
+before_install:
+- openssl aes-256-cbc -K $encrypted_1fc90f464345_key -iv $encrypted_1fc90f464345_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
