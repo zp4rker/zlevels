@@ -1,7 +1,6 @@
 language: java
-sudo: false
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
+sudo: required
+dist: trusty
+jdk:
+  - openjdk8
 script: mvn clean package
