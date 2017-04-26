@@ -6,7 +6,7 @@ jdk:
 script: mvn clean package
 deploy:
   provider: releases
-  api_key: "a4568ce087b27cb304e36797e925b0db838f6f89 "
+  api_key: ""
   file: "FILE TO UPLOAD"
   skip_cleanup: true
   on:
