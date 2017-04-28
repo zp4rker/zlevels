@@ -13,8 +13,8 @@ An open-source Discord bot, which adds a levelling system to your server.
 3. make a text document in that folder and c/p this code into it:
 ```batch
 java -jar ZLevels.jar
-```
 PAUSE
+```
 4. Save the text doc as run.bat (make sure its not run.bat.txt)
 5. double click the run.bat file and close cmd once it stops and it should generate a file called config.yml
 6. enter the needed things into the config.yml
