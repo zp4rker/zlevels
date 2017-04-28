@@ -11,7 +11,9 @@ An open-source Discord bot, which adds a levelling system to your server.
 1. Download the larest jar file from https://github.com/ZP4RKER/ZLevels/releases
 2. make a folder anywhere on your compuer and put the jar file in it
 3. make a text document in that folder and c/p this code into it:
->java -jar ZLevels.jar
+```batch
+java -jar ZLevels.jar
+```
 PAUSE
 4. Save the text doc as run.bat (make sure its not run.bat.txt)
 5. double click the run.bat file and close cmd once it stops and it should generate a file called config.yml
