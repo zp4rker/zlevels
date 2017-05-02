@@ -32,7 +32,7 @@ public class RewardsCommand implements CommandExecutor {
             // Get role name
             String role = AutoRole.roles.get(level).get("name").toString();
             // Start content
-            content += "**VIP**\n";
+            content += "**" + role + "**\n";
             // Add info
             content += "When you reach level " + level + ", you will be rewarded with the " + role + " role.\n";
         }
