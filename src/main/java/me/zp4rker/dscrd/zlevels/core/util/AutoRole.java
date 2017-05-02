@@ -56,7 +56,7 @@ public class AutoRole {
             return true;
         } catch (Exception e) {
             // Send warning
-            ZLogger.warn("Could not load data from roles.json");
+            ZLogger.warn("Could not load data from roles.yml");
             // Return false
             return false;
         }
