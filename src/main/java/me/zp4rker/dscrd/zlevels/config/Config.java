@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * The collection of all configurations.
+ *
  * @author ZP4RKER
  */
 public class Config {
@@ -33,7 +35,6 @@ public class Config {
     public static String DB_USER = "";
     public static String DB_PASS = "";
 
-
     public static long ERROR_LENGTH = 6000;
 
     public static boolean AUTOROLE_ENABLED = true;
@@ -42,147 +43,123 @@ public class Config {
     public static String STAFF_ROLE = "";
     public static List<String> CHANNELS_FOR_RATINGS = new ArrayList<>();
 
+    /**
+     * Loads the config file.
+     *
+     * @return Whether or not it could load the configurations from the config file.
+     */
     public static boolean load() {
-        // Catch errors
         try {
-            // Get file
             File file = new File(ZLevels.getDirectory(), "config.yml");
-            // Check if file exists
             if (!file.exists()) {
-                // Check if config.json exists
                 if (new File(file.getParentFile(), "config.json").exists()) {
-                    // Send info
                     ZLogger.info("Old config exists, getting data from old config...");
-                    // Transfer from json
+
                     transferFromJSON();
-                    // Send info
+
                     ZLogger.info("Now deleting old config...");
-                    // Delete config.json
+
                     new File(file.getParentFile(), "config.json").delete();
-                    // Send info
+
                     ZLogger.info("Successfully deleted old config.");
                 } else {
-                    // Send info
                     ZLogger.info("No config exists, creating default config...");
-                    // Create the file
+
                     file.createNewFile();
-                    // Get file writer
                     FileWriter writer =  new FileWriter(file);
-                    // Write default config
                     writer.write(getDefaultConfig());
-                    // Flush writer
                     writer.flush();
-                    // Close writer
                     writer.close();
-                    // Return false
+
                     return false;
                 }
             }
-            // Load config
+
             readConfig();
-            // Return true
+
             return true;
         } catch (ConfigException e) {
-            // Send warning
             ZLogger.warn(e.getCause().getMessage() + " can not be empty!");
-            // Return false
+
             return false;
         } catch (Exception e) {
-            // Send warning
             ZLogger.warn("Could not load config!");
-            e.printStackTrace();
-            // Return false
+
             return false;
         }
     }
 
+    /**
+     * Reads the values from the config and applies them to the fields.
+     *
+     * @throws Exception When something wrong is found in the config file.
+     */
     private static void readConfig() throws Exception {
-        // Get file
         File file = new File(ZLevels.getDirectory(), "config.yml");
-        // Get data
+
         Yaml data = Yaml.loadConfiguration(file);
 
-        // Loop through fields
         for (Field field : Config.class.getDeclaredFields()) {
-            // Get config key
             String key = getNewKey(field.getName());
-            // Check if key is null
+
             if (key == null) continue;
-            // Check if empty or null
+
             if (data.getString(key) == null || data.getString(key).isEmpty()) {
-                // Check if GAME_STATUS
+
                 if (data.getString(key) != null && key.equals("basic-settings.game-status")) continue;
-                // Check if STAFF_ROLE or CHANNELS_FOR_RATINGS
+
                 if (key.equals("staff-ratings.staff-role") || key.equals("staff-ratings.staff-role")) {
-                    // Check if ratings enabled
+
                     if (!data.getBoolean("staff-ratings.enabled")) continue;
+
                 }
-                // Create node
+
                 data.set(key, "");
-                // Save new data
                 data.save(file);
-                // Throw exception
+
                 throw new ConfigException(new Throwable(key));
             }
         }
 
-        // Get name
         NAME = data.getString("basic-settings.name");
-        // Get token
         TOKEN = data.getString("basic-settings.token");
-        // Get prefix
         PREFIX = data.getString("basic-settings.prefix");
-        // Get server
         SERVER = data.getString("basic-settings.server");
-        // Get ops
         OPS = data.getStringList("basic-settings.ops");
-        // Get embed colour
         EMBED_COLOUR = data.getString("basic-settings.embed-colour");
-        // Get game status
         GAME_STATUS = data.getString("basic-settings.game-status");
 
-        // Get db host
         DB_HOST = data.getString("database.host");
-        // Get db port
         DB_PORT = data.getString("database.port");
-        // Get db name
         DB_NAME = data.getString("database.name");
-        // Get db user
         DB_USER = data.getString("database.user");
-        // Get db pass
         DB_PASS = data.getString("database.pass");
 
-        // Get error length
         ERROR_LENGTH = data.getLong("more-settings.error-length");
-        // Get autorole enabled
         AUTOROLE_ENABLED = data.getBoolean("more-settings.autorole-enabled");
 
-        // Get ratings enabled
         RATINGS_ENABLED = data.getBoolean("staff-ratings.enabled");
-        // Get staff role
         STAFF_ROLE = data.getString("staff-ratings.staff-role");
-        // Get channels
         CHANNELS_FOR_RATINGS = data.getStringList("staff-ratings.channels");
 
-        // Send info
         ZLogger.info("Successfully loaded settings from config.");
     }
 
+    /**
+     * Transfers data from the old config type: JSON.
+     *
+     * @throws Exception If file config.json cannot be found.
+     */
     private static void transferFromJSON() throws Exception {
-        // Get file
         File file = new File(ZLevels.getDirectory(), "config.json");
-        // Get file reader
         FileReader reader = new FileReader(file);
-        // Get data as JSON
+
         JSONObject data = (JSONObject) new JSONParser().parse(reader);
-        // Create new YAML instance
         Yaml yaml = Yaml.loadConfiguration(new InputStreamReader(ZLevels.class.getResourceAsStream("/config.yml")));
 
-        // Loop through values
         for (Object key : data.keySet()) {
-            // Get value
             Object value = data.get(key.toString());
-            // Check which key
+
             switch (key.toString()) {
                 case "NAME":
                 case "TOKEN":
@@ -209,12 +186,16 @@ public class Config {
             }
         }
 
-        // Save the yaml
         yaml.save(new File(file.getParentFile(), "config.yml"));
-        // Send info
+
         ZLogger.info("Successfully loaded data from old config.");
     }
 
+    /**
+     * Gets the default config from the file embedded in the jar.
+     *
+     * @return A string of the default config's contents.
+     */
     private static String getDefaultConfig() {
         // Catch errors
         try {
@@ -230,8 +211,13 @@ public class Config {
         }
     }
 
+    /**
+     * Gets the key of the new config type: YAML from the key of the old config type: JSON.
+     *
+     * @param oldKey The key in the JSON config.
+     * @return The key in the YAML config.
+     */
     private static String getNewKey(String oldKey) {
-        // Switch old key
         switch (oldKey) {
             case "NAME":
                 return "basic-settings.name";

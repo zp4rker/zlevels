@@ -5,10 +5,10 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
-import me.zp4rker.dscrd.zlevels.config.Config;
-import me.zp4rker.dscrd.zlevels.ZLevels;
-import me.zp4rker.dscrd.zlevels.util.AutoRole;
 import me.zp4rker.dscrd.core.logger.ZLogger;
+import me.zp4rker.dscrd.zlevels.ZLevels;
+import me.zp4rker.dscrd.zlevels.config.Config;
+import me.zp4rker.dscrd.zlevels.util.AutoRole;
 import me.zp4rker.dscrd.zlevels.util.LevelsUtil;
 import net.dv8tion.jda.core.entities.User;
 
@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * The UserData database class.
+ *
  * @author ZP4RKER
  */
 @DatabaseTable(tableName = "USER_DATA")
@@ -31,20 +33,34 @@ public class UserData {
 
     @DatabaseField(canBeNull = false) private int level = 0;
 
-    // Temp data
-    private static UserData data = null;
+    /**
+     * Cached UserData.
+     */
+    private static HashMap<String, UserData> cache = new HashMap<>();
 
-    // Cache
-    public static HashMap<String, UserData> cache = new HashMap<>();
-
+    /**
+     * Gets the user id.
+     *
+     * @return The user id.
+     */
     public String getUserId() {
         return userId;
     }
 
+    /**
+     * Sets the user id.
+     *
+     * @param userId The user id.
+     */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
+    /**
+     * Gets the username.
+     *
+     * @return The username.
+     */
     public String getUsername() {
         // Get user
         User user = ZLevels.jda.getUserById(getUserId());
@@ -54,10 +70,20 @@ public class UserData {
         return username;
     }
 
-    public void setUsername(String username) {
+    /**
+     * Sets the username.
+     *
+     * @param username The username.
+     */
+    private void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Gets the avatar url.
+     *
+     * @return The avatar url.
+     */
     public String getAvatarUrl() {
         // Get User
         User user = ZLevels.jda.getUserById(getUserId());
@@ -67,30 +93,53 @@ public class UserData {
         return avatarUrl;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
+    /**
+     * Sets the avatar url.
+     *
+     * @param avatarUrl The avatar url.
+     */
+    private void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
+    /**
+     * Gets the total XP.
+     *
+     * @return The total XP.
+     */
     public long getTotalXp() {
         return totalXp;
     }
 
+    /**
+     * Sets the total XP.
+     *
+     * @param totalXp The total XP.
+     */
     public void setTotalXp(long totalXp) {
-        // Set to field
         this.totalXp = totalXp;
-        // Get and set levels
+
         setLevel(LevelsUtil.xpToLevels(totalXp));
-        // Check if autorole enabled
+
         if (Config.AUTOROLE_ENABLED) {
-            // Auto-assign role
             AutoRole.assignRole(this);
         }
     }
 
+    /**
+     * Gets the level.
+     *
+     * @return The level.
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * Sets the level.
+     *
+     * @param level The level.
+     */
     private void setLevel(int level) {
         // Check if new level
         if (level > this.level) {
@@ -113,6 +162,9 @@ public class UserData {
         this.level = level;
     }
 
+    /**
+     * Saves this user data to the cache.
+     */
     public void save() {
         /*// Get current data
         UserData current = this;
@@ -143,116 +195,129 @@ public class UserData {
         cache.put(getUserId(), this);
     }
 
+    /**
+     * Saves the user data to the database.
+     *
+     * @param data The user data to save.
+     */
     private static void save(UserData data) {
-        // Update avatar url
         data.setAvatarUrl(data.getAvatarUrl());
-        // Update username
         data.setUsername(data.getUsername());
-        // Run asynchronously
+
         ZLevels.async.submit(() -> {
             try {
-                // Get the connection
                 ConnectionSource source = Database.getConnection();
-                // Get the Dao
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-                // Save the record
+
                 db.createOrUpdate(data);
-                // Close connection
+
                 Database.closeConnection();
             } catch (Exception e) {
-                // Send warning
                 ZLogger.warn("Could not save UserData for " + data.getUserId() + "!");
-                e.printStackTrace();
             }
         });
     }
 
+    /**
+     * Uploads all the cache to the database, and clears the cache.
+     */
     public static void flushCache() {
-        // Loop through cache values
         cache.values().forEach(data -> save(data));
-        // Empty cache
         cache.clear();
     }
 
+    /**
+     * Deletes this user data from the database and cache.
+     */
     public void delete() {
-        // Get current data
         UserData current = this;
-        // Run asynchronously
+
+        if (cache.containsKey(current.getUserId())) cache.remove(current.getUserId());
+
         ZLevels.async.submit(() -> {
             try {
-                // Get the connection
                 ConnectionSource source = Database.getConnection();
-                // Get the Dao
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-                // Delete the record
+
                 db.delete(current);
-                // Close connection
+
                 Database.closeConnection();
             } catch (Exception e) {
-                // Send warning
                 ZLogger.warn("Colud not delete UserData for " + getUserId() + "!");
             }
         });
     }
 
+    /**
+     * Gets the user data by userId from cache or database.
+     *
+     * @param userId The user id.
+     * @return The user data.
+     */
     public static UserData fromId(String userId) {
-        // Get data
-        UserData data = byId(userId);
-        // Set data to null
-        UserData.data = null;
-        // Return data
-        return data;
+        if (cache.containsKey(userId)) {
+            return cache.get(userId);
+        }
+
+        return byId(userId);
     }
 
     private static UserData byId(String id) {
         try {
-            // Get the connection
             ConnectionSource source = Database.getConnection();
-            // Get the Dao
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-            // Search
-            data = db.queryForId(id);
-            // Close connection
+
+            UserData data = db.queryForId(id);
+
             Database.closeConnection();
+
+            return data;
         } catch (Exception e) {
-            // Check if array error
             if (e instanceof IndexOutOfBoundsException) {
-                // Return null
                 return null;
             }
-            // Send warning
+
             ZLogger.warn("Could not get UserData for " + id + "!");
-            e.printStackTrace();
+
+            return null;
         }
-        // Return data
-        return data;
     }
 
     public static List<UserData> getAllData() {
         try {
-            // Get the connection
             ConnectionSource source = Database.getConnection();
-            // Get the Dao
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-            // Get list of data
+
             List<UserData> dataList = db.queryForAll();
-            // Sort list
+
+            for (UserData data : cache.values()) {
+                if (indexOfUser(data.getUserId(), dataList) < 0) continue;
+
+                dataList.set(indexOfUser(data.getUserId(), dataList), data);
+            }
+
             dataList.sort((data1, data2) -> {
-                // Check if equal
                 if (data1.getTotalXp() == data2.getTotalXp()) return 0;
-                // Return higher value
+
                 return data1.getTotalXp() < data2.getTotalXp() ? 1 : -1;
             });
-            // Close connection
+
             Database.closeConnection();
-            // Return list
+
             return dataList;
         } catch (Exception e) {
-            // Send warning
             ZLogger.warn("Could not get all data!");
+
+            return null;
         }
-        // Return null
-        return null;
+    }
+
+    private static int indexOfUser(String userId, List<UserData> list) {
+        for (UserData data : list) {
+            if (data.getUserId().equals(userId)) return list.indexOf(data);
+        }
+
+        return -1;
     }
 
     public int[] getRank() {
