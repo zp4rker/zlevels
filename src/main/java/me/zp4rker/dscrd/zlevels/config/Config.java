@@ -142,15 +142,15 @@ public class Config {
         GAME_STATUS = data.getString("basic-settings.game-status");
 
         // Get db host
-        DB_HOST = data.getString("db.host");
+        DB_HOST = data.getString("database.host");
         // Get db port
-        DB_PORT = data.getString("db.port");
+        DB_PORT = data.getString("database.port");
         // Get db name
-        DB_NAME = data.getString("db.name");
+        DB_NAME = data.getString("database.name");
         // Get db user
-        DB_USER = data.getString("db.user");
+        DB_USER = data.getString("database.user");
         // Get db pass
-        DB_PASS = data.getString("db.pass");
+        DB_PASS = data.getString("database.pass");
 
         // Get error length
         ERROR_LENGTH = data.getLong("more-settings.error-length");
@@ -248,15 +248,15 @@ public class Config {
             case "OPS":
                 return "basic-settings.ops";
             case "DB_HOST":
-                return "db.host";
+                return "database.host";
             case "DB_PORT":
-                return "db.port";
+                return "database.port";
             case "DB_NAME":
-                return "db.name";
+                return "database.name";
             case "DB_USER":
-                return "db.user";
+                return "database.user";
             case "DB_PASS":
-                return "db.pass";
+                return "database.pass";
             case "ERROR_MILLIS":
                 return "more-settings.error-length";
             case "AUTOROLE_ENABLED":
