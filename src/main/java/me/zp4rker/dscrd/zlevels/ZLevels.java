@@ -1,11 +1,11 @@
 package me.zp4rker.dscrd.zlevels;
 
-import me.zp4rker.dscrd.core.cmd.handler.CommandHandler;
-import me.zp4rker.dscrd.zlevels.core.config.Config;
-import me.zp4rker.dscrd.zlevels.core.db.Database;
+import me.zp4rker.dscrd.core.command.handler.CommandHandler;
+import me.zp4rker.dscrd.zlevels.config.Config;
+import me.zp4rker.dscrd.zlevels.db.Database;
 import me.zp4rker.dscrd.core.logger.ZLogger;
-import me.zp4rker.dscrd.zlevels.listeners.*;
-import me.zp4rker.dscrd.zlevels.core.util.AutoRole;
+import me.zp4rker.dscrd.zlevels.lstnr.*;
+import me.zp4rker.dscrd.zlevels.util.AutoRole;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -47,7 +47,7 @@ public class ZLevels {
         // Check if can connect
         if (!Database.canConnect()) {
             // Send warning
-            ZLogger.warn("Could not establish a connection with the database! Stopping ZLevels...");
+            ZLogger.warn("Could not establish a connection with the db! Stopping ZLevels...");
             // Return
             return;
         }
@@ -58,11 +58,11 @@ public class ZLevels {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Config.TOKEN)
                     .setEventManager(new AnnotatedEventManager()) // Use Annotation event manager
-                    .addEventListener(new ReadyListener()) // Ready listeners
+                    .addEventListener(new ReadyListener()) // Ready lstnr
                     .addEventListener(handler) // Command handler
-                    .addEventListener(new MessageSendListener()) // Message send listeners
-                    .addEventListener(new MemberLeaveListener()) // Member leave listeners
-                    .addEventListener(new ReactionAddListener()) // Reaction add listeners
+                    .addEventListener(new MessageSendListener()) // Message send lstnr
+                    .addEventListener(new MemberLeaveListener()) // Member leave lstnr
+                    .addEventListener(new ReactionAddListener()) // Reaction add lstnr
                     .addEventListener(new ReactionRemoveListener()) // Reaction remove listner
                     .buildBlocking();
         } catch (Exception e) {

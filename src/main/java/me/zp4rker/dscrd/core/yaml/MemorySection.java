@@ -1,6 +1,6 @@
 package me.zp4rker.dscrd.core.yaml;
 
-import me.zp4rker.dscrd.zlevels.core.util.NumberConversions;
+import me.zp4rker.dscrd.zlevels.util.NumberConversions;
 import org.apache.commons.lang.Validate;
 
 import java.util.*;
