@@ -25,7 +25,7 @@ public class ZLevels {
 
     public static ExecutorService async = Executors.newCachedThreadPool();
 
-    public static final String VERSION = "v1.0.8";
+    public static final String VERSION = "v1.0.9";
 
     public static void main(String[] args) {
         // Add blank line
