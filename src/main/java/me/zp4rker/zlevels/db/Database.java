@@ -37,7 +37,6 @@ public class Database {
 
             ZLogger.info("Successfully loaded Database!");
         } catch (Exception e) {
-
             ZLogger.warn("Could not load Database!");
         }
     }
@@ -59,7 +58,7 @@ public class Database {
                 return source;
             } catch (Exception e) {
                 ZLogger.warn("Could not get connection to db!");
-
+                e.printStackTrace();
                 return null;
             }
         }
@@ -77,6 +76,7 @@ public class Database {
             source = null;
         } catch (Exception e) {
             ZLogger.warn("Could not close connection to db!");
+            e.printStackTrace();
         }
     }
 

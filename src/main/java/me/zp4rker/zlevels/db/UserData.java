@@ -216,6 +216,7 @@ public class UserData {
                 Database.closeConnection();
             } catch (Exception e) {
                 ZLogger.warn("Could not save UserData for " + data.getUserId() + "!");
+                e.printStackTrace();
             }
         });
     }
@@ -246,6 +247,7 @@ public class UserData {
                 Database.closeConnection();
             } catch (Exception e) {
                 ZLogger.warn("Colud not delete UserData for " + getUserId() + "!");
+                e.printStackTrace();
             }
         });
     }
@@ -276,7 +278,7 @@ public class UserData {
             }
 
             ZLogger.warn("Could not get UserData for " + userId + "!");
-
+            e.printStackTrace();
             return null;
         }
     }
@@ -310,7 +312,7 @@ public class UserData {
             return dataList;
         } catch (Exception e) {
             ZLogger.warn("Could not get all data!");
-
+            e.printStackTrace();
             return null;
         }
     }

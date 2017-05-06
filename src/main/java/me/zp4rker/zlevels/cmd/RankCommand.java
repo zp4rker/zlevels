@@ -22,7 +22,6 @@ public class RankCommand implements ICommand {
                     usage = "{prefix}rank <@User | Rank#>",
                     description = "Displays the specified user's rank and XP.")
     public String onCommand(Message message, String[] args) {
-        ZLogger.debug("Command recognised.");
         // Check args
         if (args.length >= 1) {
             // Check mentions
@@ -56,11 +55,12 @@ public class RankCommand implements ICommand {
             // Send emebed
             sendEmbed(user, message, data);
         } else if (args.length == 0) {
+            ZLogger.debug("Start.");
             // Get userdata
             UserData data = UserData.fromId(message.getAuthor().getId());
             // Send embed
             sendEmbed(message.getAuthor(), message, data);
-            ZLogger.debug("Command completed.");
+            ZLogger.debug("End.");
         } else {
             // Send error
             MessageUtil.sendError("Invalid arguments!", "Invalid arguments! \nUsage: ```-rank @User``` Or ```" +
