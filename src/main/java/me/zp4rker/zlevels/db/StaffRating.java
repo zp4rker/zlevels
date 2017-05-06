@@ -5,15 +5,17 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
+import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.ZLevels;
 import me.zp4rker.zlevels.config.Config;
-import me.zp4rker.core.logger.ZLogger;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * The StaffRating database class.
+ *
  * @author ZP4RKER
  */
 @DatabaseTable(tableName = "STAFF_RATING")
@@ -27,9 +29,6 @@ public class StaffRating {
 
     @DatabaseField(canBeNull = false) private int monthlyRatings = 0;
 
-    // Temp data
-    private static StaffRating data;
-
     public int getId() {
         return id;
     }
@@ -38,7 +37,7 @@ public class StaffRating {
         this.id = id;
     }
 
-    public String getUserId() {
+    private String getUserId() {
         return userId;
     }
 
@@ -62,115 +61,107 @@ public class StaffRating {
         this.monthlyRatings = monthlyRatings;
     }
 
+    /**
+     * Saves this rating to the database.
+     */
     public void save() {
-        // Get current data
         StaffRating current = this;
-        // Run asynchronously
+
         ZLevels.async.submit(() -> {
             try {
-                // Get the connection
-                ConnectionSource source = Database.getConnection();
-                // Get the Dao
+                ConnectionSource source = Database.openConnection();
                 Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-                // Save the record
+
                 db.createOrUpdate(current);
-                // Close connection
                 Database.closeConnection();
             } catch (Exception e) {
-                // Send warning
                 ZLogger.warn("Could not save StaffRating for " + getUserId() + "!");
             }
         });
     }
 
+    /**
+     * Delete this rating from the database.
+     */
     public void delete() {
-        // Get current data
         StaffRating current = this;
-        // Run asynchronously
+
         ZLevels.async.submit(() -> {
             try {
-                // Get the connection
-                ConnectionSource source = Database.getConnection();
-                // Get the Dao
+                ConnectionSource source = Database.openConnection();
                 Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-                // Save the record
+
                 db.delete(current);
-                // Close connection
                 Database.closeConnection();
             } catch (Exception e) {
-                // Send warning
                 ZLogger.warn("Could not delete StaffRating of " + getUserId() + "!");
             }
         });
     }
 
+    /**
+     * Gets the staff rating by userId from the database.
+     *
+     * @param userId The user id.
+     * @return The staff rating.
+     */
     public static StaffRating fromId(String userId) {
-        // Get data
-        StaffRating data = byId(userId);
-        // Set data to null
-        StaffRating.data = null;
-        // Return data
-        return data;
-    }
-
-    private static StaffRating byId(String id) {
         try {
-            // Get the connection
-            ConnectionSource source = Database.getConnection();
-            // Get the Dao
+            ConnectionSource source = Database.openConnection();
             Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-            // Search
-            data = db.queryForEq("userId", id).get(0);
-            // Close connection
+
+            StaffRating data = db.queryForEq("userId", userId).get(0);
             Database.closeConnection();
+
+            return data;
         } catch (Exception e) {
-            // Send warning
-            ZLogger.warn("Could not get UserData for " + id + "!");
+            ZLogger.warn("Could not get UserData for " + userId + "!");
+
+            return null;
         }
-        // Return data
-        return data;
     }
 
+    /**
+     * Gets a list of all staff ratings from the database.
+     *
+     * @return The list of staff ratings.
+     */
     private static List<StaffRating> getAllData() {
         try {
-            // Get the connection
-            ConnectionSource source = Database.getConnection();
-            // Get the Dao
+            ConnectionSource source = Database.openConnection();
             Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
-            // Get list of data
+
             List<StaffRating> dataList = db.queryForAll();
-            // Sort list
+
             dataList.sort((data1, data2) -> {
-                // Check if equal
                 if (data1.getRatings() == data2.getRatings()) return 0;
-                // Return higher value
+
                 return data1.getRatings() < data2.getRatings() ? 1 : -1;
             });
-            // Close connection
+
             Database.closeConnection();
-            // Return list
+
             return dataList;
         } catch (Exception e) {
-            // Send warning
             ZLogger.warn("Could not get all data!");
+
+            return null;
         }
-        // Return null
-        return null;
     }
 
+    /**
+     * Start the monthly timer for staff ratings.
+     */
     public static void startMonth() {
-        // Check if enabled
         if (!Config.RATINGS_ENABLED) return;
-        // Loop through all data
+
         getAllData().forEach(data -> {
-            // Clear data
             data.setMonthlyRatings(0);
         });
-        // Start timer
+
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                // Start month
                 startMonth();
             }
         }, 2592000000L);

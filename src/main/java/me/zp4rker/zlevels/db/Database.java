@@ -9,82 +9,90 @@ import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.core.logger.ZLogger;
 
 /**
+ * The database connection class.
+ *
  * @author ZP4RKER
  */
 public class Database {
 
     private static ConnectionSource source = null;
 
+    /**
+     * Loads the database.
+     */
     public static void load() {
-        // Send info
         ZLogger.info("Loading db...");
+
         try {
-            // Get ConnectionSource
-            ConnectionSource source = getConnection();
-            // Load USER_DATA Dao
+            ConnectionSource source = openConnection();
             Dao<UserData, String> userData = DaoManager.createDao(source, UserData.class);
-            // Create USER_DATA
+
             TableUtils.createTableIfNotExists(source, UserData.class);
-            // Check if ratings enabled
+
             if (Config.RATINGS_ENABLED) {
-                // Load STAFF_RATING Dao
                 Dao<StaffRating, String> staffRatings = DaoManager.createDao(source, StaffRating.class);
-                // Create STAFF_RATING
+
                 TableUtils.createTableIfNotExists(source, StaffRating.class);
             }
-            // Send info
+
             ZLogger.info("Successfully loaded Database!");
         } catch (Exception e) {
-            e.printStackTrace();
-            // Send warning
+
             ZLogger.warn("Could not load Database!");
         }
     }
 
-    static ConnectionSource getConnection() {
+    /**
+     * Opens the connection to the database.
+     *
+     * @return The connection.
+     */
+    static ConnectionSource openConnection() {
         if (source == null) {
             try {
-                // Get new JDBC connection
                 JdbcPooledConnectionSource source = new JdbcPooledConnectionSource("jdbc:mysql://" + Config.DB_HOST + ":" +
                         Config.DB_PORT + "/" + Config.DB_NAME, Config.DB_USER, Config.DB_PASS);
-                // Set check interval
                 source.setCheckConnectionsEveryMillis(5 * 1000);
-                // Set connection
+
                 Database.source = source;
+
+                return source;
             } catch (Exception e) {
-                // Send warning
                 ZLogger.warn("Could not get connection to db!");
-                // Return null
+
                 return null;
             }
         }
-        // Return source
+
         return source;
     }
 
+    /**
+     * Close the connection to the database.
+     */
     static void closeConnection() {
         try {
-            // Close connection
             source.close();
-            // Set source to null
+
             source = null;
         } catch (Exception e) {
-            // Send warning
             ZLogger.warn("Could not close connection to db!");
         }
     }
 
+    /**
+     * Check if the bot can connect to the database.
+     *
+     * @return Whether or not the bot can connect to the database.
+     */
     public static boolean canConnect() {
-        // Catch errors
         try {
-            // Try connecting
             new JdbcPooledConnectionSource("jdbc:mysql://" + Config.DB_HOST + ":" + Config.DB_PORT + "/" +
                     Config.DB_NAME, Config.DB_USER, Config.DB_PASS).close();
         } catch (Exception e) {
-            // Return false
             return false;
         }
-        // Return true
+
         return true;
     }
 

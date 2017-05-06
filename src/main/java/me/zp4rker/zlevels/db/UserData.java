@@ -178,7 +178,7 @@ public class UserData {
         ZLevels.async.submit(() -> {
             try {
                 // Get the connection
-                ConnectionSource source = Database.getConnection();
+                ConnectionSource source = Database.openConnection();
                 // Get the Dao
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
                 // Save the record
@@ -208,7 +208,7 @@ public class UserData {
 
         ZLevels.async.submit(() -> {
             try {
-                ConnectionSource source = Database.getConnection();
+                ConnectionSource source = Database.openConnection();
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
                 db.createOrUpdate(data);
@@ -238,7 +238,7 @@ public class UserData {
 
         ZLevels.async.submit(() -> {
             try {
-                ConnectionSource source = Database.getConnection();
+                ConnectionSource source = Database.openConnection();
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
                 db.delete(current);
@@ -251,7 +251,7 @@ public class UserData {
     }
 
     /**
-     * Gets the user data by userId from cache or database.
+     * Gets the user data by userId from the cache and database.
      *
      * @param userId The user id.
      * @return The user data.
@@ -261,21 +261,11 @@ public class UserData {
             return cache.get(userId);
         }
 
-        return byId(userId);
-    }
-
-    /**
-     * Gets the user data by userId from the database.
-     *
-     * @param id The user id.
-     * @return The user data.
-     */
-    private static UserData byId(String id) {
         try {
-            ConnectionSource source = Database.getConnection();
+            ConnectionSource source = Database.openConnection();
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
-            UserData data = db.queryForId(id);
+            UserData data = db.queryForId(userId);
 
             Database.closeConnection();
 
@@ -285,7 +275,7 @@ public class UserData {
                 return null;
             }
 
-            ZLogger.warn("Could not get UserData for " + id + "!");
+            ZLogger.warn("Could not get UserData for " + userId + "!");
 
             return null;
         }
@@ -298,7 +288,7 @@ public class UserData {
      */
     public static List<UserData> getAllData() {
         try {
-            ConnectionSource source = Database.getConnection();
+            ConnectionSource source = Database.openConnection();
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
             List<UserData> dataList = db.queryForAll();
@@ -396,7 +386,7 @@ public class UserData {
             public void run() {
                 flushCache();
             }
-        }, 21600, 21600);
+        }, 3600000, 3600000);
     }
 
 }

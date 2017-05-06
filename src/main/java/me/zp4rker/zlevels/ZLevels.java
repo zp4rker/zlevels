@@ -16,6 +16,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * The main class of the ZLevels bot.
+ *
  * @author ZP4RKER
  */
 public class ZLevels {
@@ -27,34 +29,35 @@ public class ZLevels {
 
     public static final String VERSION = "v1.0.9";
 
+    /**
+     * The method to run on startup of the java application.
+     *
+     * @param args The runtime arguments.
+     */
     public static void main(String[] args) {
-        // Add blank line
         ZLogger.blankLine();
-        // Send info
+
         ZLogger.info("Starting ZLevels...");
-        // Check if config is valid
+
         if (!Config.load()) {
-            // Send warning
             ZLogger.warn("Config was invalid or missing! Stopping ZLevels...");
-            // Return
+
             return;
         }
-        // Check if roles file is valid
+
         if (!AutoRole.load()) {
-            // Send warning
             ZLogger.warn("Roles file was invalid or missing! Stopping ZLevels...");
         }
-        // Check if can connect
+
         if (!Database.canConnect()) {
-            // Send warning
             ZLogger.warn("Could not establish a connection with the db! Stopping ZLevels...");
-            // Return
+
             return;
         }
+
         try {
-            // Create command handler
             handler = new CommandHandler(Config.PREFIX);
-            // Get JDA
+
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Config.TOKEN)
                     .setEventManager(new AnnotatedEventManager()) // Use Annotation event manager
@@ -66,13 +69,16 @@ public class ZLevels {
                     .addEventListener(new ReactionRemoveListener()) // Reaction remove listner
                     .buildBlocking();
         } catch (Exception e) {
-            // Send error
             ZLogger.warn("Could not connect: Invalid token!");
         }
     }
 
+    /**
+     * Get the directory where all the files for ZLevels are located.
+     *
+     * @return The directory.
+     */
     public static File getDirectory() {
-        // Return directory
         return new File(ZLevels.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile();
     }
 
