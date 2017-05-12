@@ -25,7 +25,9 @@ import java.util.TimerTask;
 @DatabaseTable(tableName = "USER_DATA")
 public class UserData {
 
-    @DatabaseField(id = true, unique = true, canBeNull = false) private String userId;
+    @DatabaseField(unique = true, generatedId = true) private int id;
+
+    @DatabaseField(unique = true, canBeNull = false) private String userId;
 
     @DatabaseField(canBeNull = false) private String username;
 
@@ -34,6 +36,15 @@ public class UserData {
     @DatabaseField(canBeNull = false) private long totalXp = 0;
 
     @DatabaseField(canBeNull = false) private int level = 0;
+
+    /**
+     * Gets the id of the record.
+     *
+     * @return The id.
+     */
+    private int getId() {
+        return id;
+    }
 
     /**
      * Cached UserData.
@@ -260,14 +271,15 @@ public class UserData {
      */
     public static UserData fromId(String userId) {
         if (cache.containsKey(userId)) {
+            ZLogger.debug("From cache.");
             return cache.get(userId);
         }
-
+        ZLogger.debug("From Database.");
         try {
             ConnectionSource source = Database.openConnection();
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
-            UserData data = db.queryForId(userId);
+            UserData data = db.queryForEq("userId", userId).get(0);
 
             Database.closeConnection();
 

@@ -2,7 +2,6 @@ package me.zp4rker.zlevels.cmd;
 
 import me.zp4rker.core.command.ICommand;
 import me.zp4rker.core.command.RegisterCommand;
-import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.zlevels.util.LevelsUtil;
@@ -55,12 +54,10 @@ public class RankCommand implements ICommand {
             // Send emebed
             sendEmbed(user, message, data);
         } else if (args.length == 0) {
-            ZLogger.debug("Start.");
             // Get userdata
             UserData data = UserData.fromId(message.getAuthor().getId());
             // Send embed
             sendEmbed(message.getAuthor(), message, data);
-            ZLogger.debug("End.");
         } else {
             // Send error
             MessageUtil.sendError("Invalid arguments!", "Invalid arguments! \nUsage: ```-rank @User``` Or ```" +

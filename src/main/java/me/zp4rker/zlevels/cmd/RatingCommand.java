@@ -46,7 +46,7 @@ public class RatingCommand implements ICommand {
             // Get user
             User user = message.getMentionedUsers().get(0);
             // Check if staff
-            if (message.getGuild().getMember(message.getAuthor()).getRoles().stream().noneMatch(role -> role.getName()
+            if (message.getGuild().getMember(user).getRoles().stream().noneMatch(role -> role.getName()
                     .equals(Config.STAFF_ROLE))) {
                 // Send error
                 MessageUtil.sendError("That member is not staff!", "Only staff members have ratings.", message);

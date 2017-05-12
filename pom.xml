@@ -61,12 +61,6 @@
             <artifactId>jna</artifactId>
             <version>LATEST</version>
         </dependency>
-        <!-- SQLite JDBC
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>LATEST</version>
-        </dependency>-->
         <!-- MySQL JDBC -->
         <dependency>
             <groupId>mysql</groupId>
