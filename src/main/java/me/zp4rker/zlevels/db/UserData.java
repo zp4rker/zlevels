@@ -309,17 +309,21 @@ public class UserData {
             }
             ZLogger.debug("End.");
 
+            ZLogger.debug("Start #2.");
             for (UserData data : cache.values()) {
                 if (indexOfUser(data.getUserId(), dataList) < 0) continue;
 
                 dataList.set(indexOfUser(data.getUserId(), dataList), data);
             }
+            ZLogger.debug("End #2.");
 
+            ZLogger.debug("Start #3.");
             dataList.sort((data1, data2) -> {
                 if (data1.getTotalXp() == data2.getTotalXp()) return 0;
 
                 return data1.getTotalXp() < data2.getTotalXp() ? 1 : -1;
             });
+            ZLogger.debug("End #3.");
 
             Database.closeConnection();
 
