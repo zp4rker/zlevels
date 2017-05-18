@@ -81,13 +81,9 @@ public class RankCommand implements ICommand {
         String url = data.getAvatarUrl();
         // Create embed
         EmbedBuilder embed = new EmbedBuilder();
-        // Set author
-        //embed.setAuthor(user.getName(), null, url);
-        // Set footer
-        //embed.setFooter(Config.NAME + " Ranks", message.getJDA().getSelfUser().getEffectiveAvatarUrl());
         // Set colour
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
-        embed.addField(data.getUsername(), "", false);
+        embed.addField("User", "`" + data.getUsername() + "`", false);
         // Get rank
         int[] rank = data.getRank();
         // Add rank
