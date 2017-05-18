@@ -3,6 +3,7 @@ package me.zp4rker.zlevels.cmd;
 import me.zp4rker.core.command.ICommand;
 import me.zp4rker.core.command.RegisterCommand;
 import me.zp4rker.core.logger.ZLogger;
+import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.zlevels.util.LevelsUtil;
 import me.zp4rker.zlevels.util.MessageUtil;
@@ -79,9 +80,9 @@ public class RankCommand implements ICommand {
         // Create embed
         EmbedBuilder embed = new EmbedBuilder();
         // Set author
-        //embed.setAuthor(user.getName(), null, url);
+        embed.setAuthor(user.getName(), null, url);
         // Set footer
-        //embed.setFooter(Config.NAME + " Ranks", message.getJDA().getSelfUser().getEffectiveAvatarUrl());
+        embed.setFooter(Config.NAME + " Ranks", message.getJDA().getSelfUser().getEffectiveAvatarUrl());
         // Set colour
         //embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Get rank
