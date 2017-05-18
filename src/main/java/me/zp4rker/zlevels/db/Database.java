@@ -29,6 +29,12 @@ public class Database {
 
             TableUtils.createTableIfNotExists(source, UserData.class);
 
+            ZLogger.debug("Starting...");
+            for (UserData data : userData) {
+                data.getUserId();
+            }
+            ZLogger.debug("Ended.");
+
             if (Config.RATINGS_ENABLED) {
                 Dao<StaffRating, String> staffRatings = DaoManager.createDao(source, StaffRating.class);
 

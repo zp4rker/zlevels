@@ -60,14 +60,14 @@ public class ZLevels {
 
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Config.TOKEN)
-                    .setEventManager(new AnnotatedEventManager()) // Use Annotation event manager
-                    .addEventListener(new ReadyListener()) // Ready lstnr
-                    .addEventListener(handler) // Command handler
-                    .addEventListener(new MessageSendListener()) // Message send lstnr
-                    .addEventListener(new MemberLeaveListener()) // Member leave lstnr
-                    .addEventListener(new ReactionAddListener()) // Reaction add lstnr
-                    .addEventListener(new ReactionRemoveListener()) // Reaction remove listner
-                    .buildBlocking();
+                    .setEventManager(new AnnotatedEventManager())
+                    .addEventListener(new ReadyListener())
+                    .addEventListener(handler)
+                    .addEventListener(new MessageSendListener())
+                    .addEventListener(new MemberLeaveListener())
+                    .addEventListener(new ReactionAddListener())
+                    .addEventListener(new ReactionRemoveListener())
+                    .buildAsync();
         } catch (Exception e) {
             ZLogger.warn("Could not connect: Invalid token!");
         }
