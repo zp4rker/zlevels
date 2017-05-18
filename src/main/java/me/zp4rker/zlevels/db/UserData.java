@@ -354,9 +354,7 @@ public class UserData {
 
         int[] rank = new int[2];
 
-        ZLogger.debug("Start.");
         List<UserData> dataList = getAllData();
-        ZLogger.debug("End.");
 
         rank[1] = dataList.size();
         rank[0] = getPosition(dataList, current) + 1;

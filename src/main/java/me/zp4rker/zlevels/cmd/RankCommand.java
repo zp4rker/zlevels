@@ -2,6 +2,7 @@ package me.zp4rker.zlevels.cmd;
 
 import me.zp4rker.core.command.ICommand;
 import me.zp4rker.core.command.RegisterCommand;
+import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.zlevels.util.LevelsUtil;
@@ -87,7 +88,9 @@ public class RankCommand implements ICommand {
         // Set colour
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Get rank
+        ZLogger.debug("Start.");
         int[] rank = data.getRank();
+        ZLogger.debug("End.");
         // Add rank
         embed.addField("Rank", rank[0] + "/" + rank[1], false);
         // Add level
