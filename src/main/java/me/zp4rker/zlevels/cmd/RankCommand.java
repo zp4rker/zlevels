@@ -2,7 +2,6 @@ package me.zp4rker.zlevels.cmd;
 
 import me.zp4rker.core.command.ICommand;
 import me.zp4rker.core.command.RegisterCommand;
-import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.zlevels.util.LevelsUtil;
@@ -98,9 +97,7 @@ public class RankCommand implements ICommand {
         // Add total xp
         embed.addField("Total XP", data.getTotalXp() + "", false);
         // Send embed
-        ZLogger.debug("Start.");
         message.getChannel().sendMessage(embed.build()).complete();
-        ZLogger.debug("End.");
     }
 
 }

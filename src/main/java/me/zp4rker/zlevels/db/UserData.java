@@ -268,10 +268,8 @@ public class UserData {
      */
     public static UserData fromId(String userId) {
         if (cache.containsKey(userId)) {
-            ZLogger.debug("From cache.");
             return cache.get(userId);
         }
-        ZLogger.debug("From Database.");
         try {
             ConnectionSource source = Database.openConnection();
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
