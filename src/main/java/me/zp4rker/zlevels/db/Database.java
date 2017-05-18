@@ -8,6 +8,9 @@ import com.j256.ormlite.table.TableUtils;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.core.logger.ZLogger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The database connection class.
  *
@@ -30,9 +33,11 @@ public class Database {
             TableUtils.createTableIfNotExists(source, UserData.class);
 
             ZLogger.debug("Starting...");
+            List<UserData> dataList = new ArrayList<>();
             for (UserData data : userData) {
-                data.getUserId();
+                dataList.add(data);
             }
+            ZLogger.debug("" + dataList.size());
             ZLogger.debug("Ended.");
 
             if (Config.RATINGS_ENABLED) {
