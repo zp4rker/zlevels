@@ -302,10 +302,12 @@ public class UserData {
             ConnectionSource source = Database.openConnection();
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
+            ZLogger.debug("Start.");
             List<UserData> dataList = new ArrayList<>();
             for (UserData data : db) {
                 dataList.add(data);
             }
+            ZLogger.debug("End.");
 
             for (UserData data : cache.values()) {
                 if (indexOfUser(data.getUserId(), dataList) < 0) continue;
