@@ -5,11 +5,8 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.core.logger.ZLogger;
-
-import java.util.ArrayList;
-import java.util.List;
+import me.zp4rker.zlevels.config.Config;
 
 /**
  * The database connection class.
@@ -31,14 +28,6 @@ public class Database {
             Dao<UserData, String> userData = DaoManager.createDao(source, UserData.class);
 
             TableUtils.createTableIfNotExists(source, UserData.class);
-
-            ZLogger.debug("Starting...");
-            List<UserData> dataList = new ArrayList<>();
-            for (UserData data : userData) {
-                dataList.add(data);
-            }
-            ZLogger.debug("" + dataList.size());
-            ZLogger.debug("Ended.");
 
             if (Config.RATINGS_ENABLED) {
                 Dao<StaffRating, String> staffRatings = DaoManager.createDao(source, StaffRating.class);

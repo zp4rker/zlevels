@@ -12,10 +12,7 @@ import me.zp4rker.zlevels.util.AutoRole;
 import me.zp4rker.zlevels.util.LevelsUtil;
 import net.dv8tion.jda.core.entities.User;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * The UserData database class.
@@ -305,7 +302,10 @@ public class UserData {
             ConnectionSource source = Database.openConnection();
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
-            List<UserData> dataList = db.queryForAll();
+            List<UserData> dataList = new ArrayList<>();
+            for (UserData data : db) {
+                dataList.add(data);
+            }
 
             for (UserData data : cache.values()) {
                 if (indexOfUser(data.getUserId(), dataList) < 0) continue;
