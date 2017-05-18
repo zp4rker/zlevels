@@ -102,7 +102,7 @@ public class RankCommand implements ICommand {
         embed.addField("Total XP", data.getTotalXp() + "", false);
         // Send embed
         ZLogger.debug("Start.");
-        message.getChannel().sendMessage(embed.build()).complete();
+        message.getChannel().sendMessage(embed.build()).queue();
         ZLogger.debug("End.");
     }
 
