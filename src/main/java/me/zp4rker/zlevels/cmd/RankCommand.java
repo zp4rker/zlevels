@@ -82,7 +82,7 @@ public class RankCommand implements ICommand {
         // Create embed
         EmbedBuilder embed = new EmbedBuilder();
         // Set author
-        embed.setAuthor(user.getName(), null, url);
+        //embed.setAuthor(user.getName(), null, url);
         // Set footer
         embed.setFooter(Config.NAME + " Ranks", message.getJDA().getSelfUser().getEffectiveAvatarUrl());
         // Set colour
@@ -96,9 +96,10 @@ public class RankCommand implements ICommand {
         // Compile string
         String levelXp = LevelsUtil.remainingXp(data.getTotalXp()) + "/" + LevelsUtil.xpToNextLevel(data
                 .getLevel());
-        levelXp += " (Total " + data.getTotalXp() + ")";
         // Add xp
         embed.addField("XP", levelXp, false);
+        // Add total xp
+        embed.addField("Total XP", data.getTotalXp() + "", false);
         // Send embed
         ZLogger.debug("Start.");
         message.getChannel().sendMessage(embed.build()).complete();
