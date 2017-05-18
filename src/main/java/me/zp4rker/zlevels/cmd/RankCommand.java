@@ -88,9 +88,7 @@ public class RankCommand implements ICommand {
         // Set colour
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Get rank
-        ZLogger.debug("Start.");
         int[] rank = data.getRank();
-        ZLogger.debug("End.");
         // Add rank
         embed.addField("Rank", rank[0] + "/" + rank[1], false);
         // Add level
@@ -103,7 +101,9 @@ public class RankCommand implements ICommand {
         // Add total xp
         embed.addField("Total XP", data.getTotalXp() + "", false);
         // Send embed
+        ZLogger.debug("Start.");
         message.getChannel().sendMessage(embed.build()).complete();
+        ZLogger.debug("End.");
     }
 
 }
