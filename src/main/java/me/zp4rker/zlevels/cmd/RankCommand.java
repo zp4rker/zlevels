@@ -11,6 +11,8 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.User;
 
+import java.awt.*;
+
 /**
  * @author ZP4RKER
  */
@@ -82,9 +84,9 @@ public class RankCommand implements ICommand {
         // Set author
         embed.setAuthor(user.getName(), null, url);
         // Set footer
-        embed.setFooter(Config.NAME + " Ranks", message.getJDA().getSelfUser().getEffectiveAvatarUrl());
+        //embed.setFooter(Config.NAME + " Ranks", message.getJDA().getSelfUser().getEffectiveAvatarUrl());
         // Set colour
-        //embed.setColor(Color.decode(Config.EMBED_COLOUR));
+        embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Get rank
         int[] rank = data.getRank();
         // Add rank
