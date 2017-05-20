@@ -66,6 +66,7 @@ public class FlushCommand implements ICommand {
             // Save data
             data.save();
         }
+        UserData.flushCache();
         // Send info
         ZLogger.info("Successfully saved all user data.");
     }
