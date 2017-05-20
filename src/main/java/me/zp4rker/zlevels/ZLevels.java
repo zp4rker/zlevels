@@ -35,6 +35,8 @@ public class ZLevels {
      * @param args The runtime arguments.
      */
     public static void main(String[] args) {
+        ZLogger.initialise();
+
         ZLogger.blankLine();
 
         ZLogger.info("Starting ZLevels...");
@@ -44,6 +46,7 @@ public class ZLevels {
 
             return;
         }
+
 
         if (!AutoRole.load()) {
             ZLogger.warn("Roles file was invalid or missing! Stopping ZLevels...");
