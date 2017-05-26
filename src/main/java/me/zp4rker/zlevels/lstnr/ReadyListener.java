@@ -35,6 +35,7 @@ public class ReadyListener {
         ZLevels.handler.registerCommand(new RewardsCommand());
         ZLevels.handler.registerCommand(new InactiveCommand());
         ZLevels.handler.registerCommand(new FlushCommand());
+        ZLevels.handler.registerCommand(new StopCommand());
 
         ZLogger.info("Successfully registered " + ZLevels.handler.getCommands().values().size() + " cmd!");
 

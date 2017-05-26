@@ -2,6 +2,7 @@ package me.zp4rker.zlevels;
 
 import me.zp4rker.core.command.handler.CommandHandler;
 import me.zp4rker.core.logger.ZLogger;
+import me.zp4rker.zlevels.cmd.StopCommand;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.Database;
 import me.zp4rker.zlevels.lstnr.*;
@@ -71,6 +72,12 @@ public class ZLevels {
                     .addEventListener(new ReactionAddListener())
                     .addEventListener(new ReactionRemoveListener())
                     .buildAsync();
+
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                    StopCommand.shutdown(jda);
+                }
+            });
         } catch (Exception e) {
             ZLogger.warn("Could not connect: Invalid token!");
         }
