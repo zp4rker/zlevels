@@ -69,6 +69,9 @@ public class ReadyListener {
 
             ZLogger.info("ZLevels " + ZLevels.VERSION + " is ready!");
         });
+
+        ZLevels.jda.getGuildById(Config.SERVER).getTextChannelById(Config.LOG_CHANNEL)
+                .sendMessage("ZLevels started successfully!").queue();
     }
 
 }
