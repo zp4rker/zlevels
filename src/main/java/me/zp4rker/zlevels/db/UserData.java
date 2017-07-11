@@ -235,7 +235,14 @@ public class UserData {
      * Uploads all the cache to the database, and clears the cache.
      */
     public static void flushCache() {
-        cache.values().forEach(data -> save(data));
+        cache.values().forEach(data -> {
+            save(data);
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         cache.clear();
     }
 
