@@ -20,9 +20,9 @@ public class StopCommand implements ICommand {
         String userId = message.getAuthor().getId();
         if (Config.OPS.stream().noneMatch(s -> s.equals(userId))) return;
 
-        shutdown(message.getJDA());
-
         message.getChannel().sendMessage("Stopping " + Config.NAME + "...").complete();
+
+        shutdown(message.getJDA());
     }
 
     public static void shutdown(JDA jda) {
