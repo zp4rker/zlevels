@@ -54,7 +54,7 @@ public class TopCommand implements ICommand {
                 count = UserData.getAllData().size();
             }
             // Set footer
-            embed.setFooter("Top " + count, message.getJDA().getSelfUser().getAvatarUrl());
+            embed.setFooter("Top " + count, null);
             // Compile description
             String desc = compileBoard(count, message);
             // Set description

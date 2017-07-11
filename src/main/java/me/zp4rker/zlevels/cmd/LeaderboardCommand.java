@@ -58,7 +58,7 @@ public class LeaderboardCommand implements ICommand {
             embed.setDescription(desc);
         } catch (Exception e) {
             // Set footer
-            embed.setFooter("Top Members - Page 1", message.getJDA().getSelfUser().getAvatarUrl());
+            embed.setFooter("Top Members - Page 1", null);
             // Compile description
             String desc = compileBoard(1, message);
             // Set description
