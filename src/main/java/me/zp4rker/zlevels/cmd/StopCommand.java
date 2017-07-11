@@ -24,7 +24,9 @@ public class StopCommand implements ICommand {
 
         message.getGuild().getTextChannelById(Config.LOG_CHANNEL).sendMessage("Stopping ZLevels...").complete();
 
-        message.getTextChannel().deleteMessages(Arrays.asList(message)).complete();
+        Message msg = message.getChannel().sendMessage("`").complete();
+
+        message.getTextChannel().deleteMessages(Arrays.asList(message, msg)).complete();
 
         shutdown(message.getJDA());
     }
