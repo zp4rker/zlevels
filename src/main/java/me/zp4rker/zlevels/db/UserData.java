@@ -211,16 +211,18 @@ public class UserData {
      * @param data The user data to save.
      */
     public static void save(UserData data) {
+        ZLogger.debug("TEST #1");
         data.setAvatarUrl(data.getAvatarUrl());
         data.setUsername(data.getUsername());
+        ZLogger.debug("TEST #2");
 
         ZLevels.async.submit(() -> {
             try {
                 ConnectionSource source = Database.openConnection();
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-                ZLogger.debug("TEST #1");
+                ZLogger.debug("TEST #3");
                 db.createOrUpdate(data);
-                ZLogger.debug("TEST #2");
+                ZLogger.debug("TEST #4");
                 Database.closeConnection();
             } catch (Exception e) {
                 ZLogger.warn("Could not save UserData for " + data.getUserId() + "!");
