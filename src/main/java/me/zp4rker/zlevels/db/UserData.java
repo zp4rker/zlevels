@@ -218,9 +218,9 @@ public class UserData {
             try {
                 ConnectionSource source = Database.openConnection();
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-
+                ZLogger.debug("TEST #1");
                 db.createOrUpdate(data);
-
+                ZLogger.debug("TEST #2");
                 Database.closeConnection();
             } catch (Exception e) {
                 ZLogger.warn("Could not save UserData for " + data.getUserId() + "!");
