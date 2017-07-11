@@ -28,6 +28,7 @@ public class Config {
     public static List<String> OPS = Arrays.asList("145064570237485056");
     public static String EMBED_COLOUR = "";
     public static String GAME_STATUS = "";
+    public static String LOG_CHANNEL = "";
 
     public static String DB_HOST = "";
     public static String DB_PORT = "";
@@ -128,6 +129,7 @@ public class Config {
         OPS = data.getStringList("basic-settings.ops");
         EMBED_COLOUR = data.getString("basic-settings.embed-colour");
         GAME_STATUS = data.getString("basic-settings.game-status");
+        LOG_CHANNEL = data.getString("basic-settings.log-channel");
 
         DB_HOST = data.getString("database.host");
         DB_PORT = data.getString("database.port");
@@ -231,6 +233,8 @@ public class Config {
                 return "basic-settings.embed-colour";
             case "GAME_STATUS":
                 return "basic-settings.game-status";
+            case "LOG_CHANNEL":
+                return "basic-settings.log-channel";
             case "OPS":
                 return "basic-settings.ops";
             case "DB_HOST":
