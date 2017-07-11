@@ -5,7 +5,9 @@ import me.zp4rker.core.command.ICommand;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.UserData;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.User;
 
 import java.awt.*;
 
@@ -38,7 +40,7 @@ public class TopCommand implements ICommand {
             // Check count
             if (count > 50) throw new Exception();
             // Set footer
-            embed.setFooter("Top " + count, message.getJDA().getSelfUser().getAvatarUrl());
+            embed.setFooter("Top " + count, null);
             // Compile description
             String desc = compileBoard(count, message);
             // Set description
@@ -71,8 +73,9 @@ public class TopCommand implements ICommand {
             UserData data = UserData.getAllData().get(i);
             // Add rank #
             desc += "**" + (i + 1) + "**. " + (i < 10 ? " " : "");
+            User user = message.getGuild().getMemberById(data.getUserId()).getUser();
             // Add user name
-            desc += message.getGuild().getMemberById(data.getUserId()).getAsMention();
+            desc += "`" + user.getName() + "#" + user.getDiscriminator() + "`";
             // Add level
             desc += " (Lvl. " + data.getLevel() + ")";
             // Check if last

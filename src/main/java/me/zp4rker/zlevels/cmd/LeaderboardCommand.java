@@ -8,6 +8,7 @@ import me.zp4rker.zlevels.util.LevelsUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.core.entities.User;
 
 import java.awt.*;
 
@@ -50,7 +51,7 @@ public class LeaderboardCommand implements ICommand {
             // Check count
             if (index > LevelsUtil.getPageCount() || index < 1) throw new Exception();
             // Set footer
-            embed.setFooter("Top Members - Page " + index, message.getJDA().getSelfUser().getAvatarUrl());
+            embed.setFooter("Top Members - Page " + index, null);
             // Compile description
             String desc = compileBoard(index, message);
             // Set description
@@ -74,10 +75,12 @@ public class LeaderboardCommand implements ICommand {
         for (int i = 0; i < 10; i++) {
             // Get data
             UserData data = LevelsUtil.getPage(index).get(i);
+            User user = message.getGuild().getMemberById(data.getUserId()).getUser();
             // Add rank #
             desc.append("**" + data.getRank()[0] + "**. " + (i < 10 ? " " : ""))
                     // Add user name
-                    .append(message.getGuild().getMemberById(data.getUserId()).getAsMention())
+                    .append("`" + user.getName() + "#")
+                    .append(user.getDiscriminator() + "`")
                     // Add level
                     .append(" (Lvl. " + data.getLevel() + ")")
                     // Add new line
