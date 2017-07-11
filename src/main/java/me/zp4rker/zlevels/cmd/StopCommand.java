@@ -8,6 +8,8 @@ import me.zp4rker.zlevels.db.UserData;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Message;
 
+import java.util.Arrays;
+
 /**
  * @author ZP4RKER
  */
@@ -22,7 +24,7 @@ public class StopCommand implements ICommand {
 
         message.getGuild().getTextChannelById(Config.LOG_CHANNEL).sendMessage("Stopping ZLevels...").complete();
 
-        message.getChannel().deleteMessageById(message.getId()).complete();
+        message.getTextChannel().deleteMessages(Arrays.asList(message));
 
         shutdown(message.getJDA());
     }
