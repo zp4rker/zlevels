@@ -17,7 +17,7 @@ public class TestCommand implements ICommand {
 
     @RegisterCommand(aliases = "test")
     public void onCommand(Message message, String[] args) {
-        UserData.save(UserData.fromId(message.getAuthor().getId()));
+        UserData.flushCache();
         message.delete().complete();
     }
 
