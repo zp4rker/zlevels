@@ -211,18 +211,14 @@ public class UserData {
      * @param data The user data to save.
      */
     public static void save(UserData data) {
-        ZLogger.debug("TEST #1");
         data.setAvatarUrl(data.getAvatarUrl());
         data.setUsername(data.getUsername());
-        ZLogger.debug("TEST #2");
 
         ZLevels.async.submit(() -> {
             try {
                 ConnectionSource source = Database.openConnection();
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-                ZLogger.debug("TEST #3");
                 db.createOrUpdate(data);
-                ZLogger.debug("TEST #4");
                 Database.closeConnection();
             } catch (Exception e) {
                 ZLogger.warn("Could not save UserData for " + data.getUserId() + "!");
@@ -235,6 +231,7 @@ public class UserData {
      * Uploads all the cache to the database, and clears the cache.
      */
     public static void flushCache() {
+        ZLevels.jda.getTextChannelById(Config.LOG_CHANNEL).sendMessage("Flushing cache...").complete();
         cache.values().forEach(data -> {
             save(data);
             try {
@@ -244,6 +241,7 @@ public class UserData {
             }
         });
         cache.clear();
+        ZLevels.jda.getTextChannelById(Config.LOG_CHANNEL).sendMessage("Successfully flushed cache!").complete();
     }
 
     /**
