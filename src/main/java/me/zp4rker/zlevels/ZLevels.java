@@ -80,7 +80,7 @@ public class ZLevels {
 
                     ZLogger.info("Stopping ZLevels...");
 
-                    jda.getGuildById(Config.SERVER).getTextChannelById(Config.LOG_CHANNEL)
+                    jda.getTextChannelById(Config.LOG_CHANNEL)
                             .sendMessage("Stopping ZLevels...").complete();
 
                     jda.shutdown();
