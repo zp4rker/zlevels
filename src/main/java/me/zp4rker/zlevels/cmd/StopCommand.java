@@ -20,8 +20,7 @@ public class StopCommand implements ICommand {
         String userId = message.getAuthor().getId();
         if (Config.OPS.stream().noneMatch(s -> s.equals(userId))) return;
 
-        message.getGuild().getTextChannelById(Config.LOG_CHANNEL)
-                .sendMessage("Stopping " + Config.NAME + " ZLevels...").complete();
+        message.getGuild().getTextChannelById(Config.LOG_CHANNEL).sendMessage("Stopping ZLevels...").complete();
 
         shutdown(message.getJDA());
     }

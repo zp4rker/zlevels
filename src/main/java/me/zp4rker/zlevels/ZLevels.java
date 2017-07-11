@@ -5,6 +5,7 @@ import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.cmd.StopCommand;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.Database;
+import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.zlevels.lstnr.*;
 import me.zp4rker.zlevels.util.AutoRole;
 import net.dv8tion.jda.core.AccountType;
@@ -73,11 +74,18 @@ public class ZLevels {
                     .addEventListener(new ReactionRemoveListener())
                     .buildAsync();
 
-            /*Runtime.getRuntime().addShutdownHook(new Thread() {
+            Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
-                    StopCommand.shutdown(jda);
+                    UserData.flushCache();
+
+                    ZLogger.info("Stopping ZLevels...");
+
+                    jda.getGuildById(Config.SERVER).getTextChannelById(Config.LOG_CHANNEL)
+                            .sendMessage("Stopping ZLevels...").complete();
+
+                    jda.shutdown();
                 }
-            });*/
+            });
         } catch (Exception e) {
             ZLogger.warn("Could not connect: Invalid token!");
         }
