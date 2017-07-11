@@ -20,7 +20,7 @@ public class StopCommand implements ICommand {
         String userId = message.getAuthor().getId();
         if (Config.OPS.stream().noneMatch(s -> s.equals(userId))) return;
 
-        message.getChannel().sendMessage("Stopping " + Config.NAME + " bot...").complete();
+        message.getChannel().sendMessage("Stopping " + Config.NAME + " ZLevels...").complete();
 
         shutdown(message.getJDA());
     }
@@ -28,7 +28,7 @@ public class StopCommand implements ICommand {
     public static void shutdown(JDA jda) {
         UserData.flushCache();
 
-        ZLogger.info("Stopping " + Config.NAME + " bot...");
+        ZLogger.info("Stopping ZLevels...");
 
         jda.shutdown();
         System.exit(0);

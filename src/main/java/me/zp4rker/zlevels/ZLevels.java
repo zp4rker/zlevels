@@ -73,11 +73,11 @@ public class ZLevels {
                     .addEventListener(new ReactionRemoveListener())
                     .buildAsync();
 
-            Runtime.getRuntime().addShutdownHook(new Thread() {
+            /*Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     StopCommand.shutdown(jda);
                 }
-            });
+            });*/
         } catch (Exception e) {
             ZLogger.warn("Could not connect: Invalid token!");
         }
