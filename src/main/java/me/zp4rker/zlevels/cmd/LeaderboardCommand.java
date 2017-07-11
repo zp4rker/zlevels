@@ -11,37 +11,36 @@ import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.User;
 
 import java.awt.*;
+import java.util.HashMap;
 
 /**
  * @author ZP4RKER
  */
 public class LeaderboardCommand implements ICommand {
 
+    public static HashMap<String, String> issues = new HashMap<>();
+
     @RegisterCommand(aliases = {"leaderboard", "lb"},
                     usage = "{prefix}leaderboard <Page #>",
                     description = "Displays the specified page of top members.")
-    public String onCommand(Message message, String[] args) {
-        // Send embed
+    public void onCommand(Message message, String[] args) {
         Message newMessage = message.getChannel().sendMessage(compileEmbed(message, args)).complete();
-        // Catch errors
+        issues.put(newMessage.getId(), message.getAuthor().getId());
+
         try {
-            // Add reactions
             resetReactions(newMessage, Integer.parseInt(args[0]));
         } catch (Exception e) {
-            // Add reactions (page 1)
             resetReactions(newMessage, 1);
         }
-        // Delete old message
+
         message.delete().complete();
-        // Return null
-        return null;
     }
 
     public static MessageEmbed compileEmbed(Message message, String[] args) {
         // Create embed
         EmbedBuilder embed = new EmbedBuilder();
         // Set author
-        embed.setAuthor(Config.NAME + " All time leaderboard", null, null);
+        embed.setAuthor("All time leaderboard for " + Config.NAME, null, null);
         // Set colour
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
         // Catch errors

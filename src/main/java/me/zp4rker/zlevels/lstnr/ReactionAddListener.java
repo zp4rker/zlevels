@@ -110,6 +110,12 @@ public class ReactionAddListener {
 
             if (!message.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) return;
             if (!embed.getFooter().getText().contains("Page")) return;
+
+            int page = Integer.parseInt(embed.getFooter().getText().replace("Top Members - Page ", ""));
+            if (!LeaderboardCommand.issues.get(message.getId()).equals(event.getUser().getId())) {
+                LeaderboardCommand.resetReactions(message, page);
+                return;
+            }
             // Set new page to 0
             int newPage = 0;
             // Check if correct reaction
@@ -125,8 +131,6 @@ public class ReactionAddListener {
                     // Return
                     return;
                 }
-                // Get page
-                int page = Integer.parseInt(embed.getFooter().getText().replace("Top Members - Page ", ""));
                 // Check if next
                 if (next) {
                     // Increment page
