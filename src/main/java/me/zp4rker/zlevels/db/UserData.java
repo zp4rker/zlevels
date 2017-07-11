@@ -210,7 +210,7 @@ public class UserData {
      *
      * @param data The user data to save.
      */
-    private static void save(UserData data) {
+    public static void save(UserData data) {
         data.setAvatarUrl(data.getAvatarUrl());
         data.setUsername(data.getUsername());
 
