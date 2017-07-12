@@ -231,6 +231,8 @@ public class UserData {
      * Uploads all the cache to the database, and clears the cache.
      */
     public static void flushCache() {
+        if (cache.isEmpty()) return;
+
         ZLevels.jda.getTextChannelById(Config.LOG_CHANNEL).sendMessage("Flushing cache...").complete();
         cache.values().forEach(data -> {
             save(data);
