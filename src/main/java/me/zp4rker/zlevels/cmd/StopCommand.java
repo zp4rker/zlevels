@@ -18,9 +18,13 @@ public class StopCommand implements ICommand {
     @RegisterCommand(aliases = "stop",
                     usage = "{prefix}stop",
                     description = "Stops the bot.")
-    public void onCommand(Message message) {
+    public void onCommand(Message message, String[] args) {
         String userId = message.getAuthor().getId();
         if (Config.OPS.stream().noneMatch(s -> s.equals(userId))) return;
+
+        if (args.length > 0) {
+            if (Arrays.stream(args).noneMatch((arg) -> arg.equalsIgnoreCase("levels"))) return;
+        }
 
         message.getGuild().getTextChannelById(Config.LOG_CHANNEL).sendMessage("Stopping ZLevels...").complete();
 
@@ -31,7 +35,7 @@ public class StopCommand implements ICommand {
         shutdown(message.getJDA());
     }
 
-    public static void shutdown(JDA jda) {
+    private void shutdown(JDA jda) {
         UserData.flushCache();
 
         ZLogger.info("Stopping ZLevels...");
