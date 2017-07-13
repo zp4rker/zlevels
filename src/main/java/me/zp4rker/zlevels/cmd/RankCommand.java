@@ -76,8 +76,6 @@ public class RankCommand implements ICommand {
             // Return
             return;
         }
-        // Get avatar url
-        String url = data.getAvatarUrl();
         // Create embed
         EmbedBuilder embed = new EmbedBuilder();
         // Set colour
