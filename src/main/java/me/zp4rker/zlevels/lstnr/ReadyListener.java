@@ -35,6 +35,7 @@ public class ReadyListener {
         ZLevels.handler.registerCommand(new RewardsCommand());
         ZLevels.handler.registerCommand(new InactiveCommand());
         ZLevels.handler.registerCommand(new FlushCommand());
+        ZLevels.handler.registerCommand(new InfoCommand());
         ZLevels.handler.registerCommand(new StopCommand());
 
         ZLogger.info("Successfully registered " + ZLevels.handler.getCommands().values().size() + " cmd!");
@@ -71,7 +72,7 @@ public class ReadyListener {
         });
 
         ZLevels.jda.getTextChannelById(Config.LOG_CHANNEL)
-                .sendMessage("ZLevels started successfully!").queue();
+                .sendMessage("ZLevels v " + ZLevels.VERSION + " started successfully!").queue();
     }
 
 }
