@@ -20,81 +20,68 @@ public class RankCommand implements ICommand {
     @RegisterCommand(aliases = "rank",
                     usage = "{prefix}rank <@User | Rank#>",
                     description = "Displays the specified user's rank and XP.")
-    public String onCommand(Message message, String[] args) {
-        // Check args
+    public void onCommand(Message message, String[] args) {
         if (args.length >= 1) {
-            // Check mentions
             if (message.getMentionedUsers().size() != 1) {
                 try {
-                    // Get rank from args
                     int rank = Integer.parseInt(args[0]);
-                    // Get userdata
+
                     UserData data = UserData.fromRank(rank);
-                    // Send embed
+
                     sendEmbed(message.getJDA().getUserById(data.getUserId()), message, data);
                 } catch (Exception e) {
-                    // Send error
                     MessageUtil.sendError("Invalid arguments!", "Invalid arguments! \nUsage: ```-rank @User``` Or ```" +
                             "-rank <RankNumber>```", message);
                 }
-                // Return
-                return null;
+
+                return;
             }
-            // Check if bot
+
             if (message.getMentionedUsers().get(0).isBot()) {
-                // Send error
                 MessageUtil.sendError("Invalid user!", "Bots do not have ranks!", message);
-                // Return null
-                return null;
+                return;
             }
-            // Get Mentioned user
+
             User user = message.getMentionedUsers().get(0);
-            // Get userdata
+
             UserData data = UserData.fromId(message.getMentionedUsers().get(0).getId());
-            // Send emebed
+
             sendEmbed(user, message, data);
         } else if (args.length == 0) {
-            // Get userdata
+
             UserData data = UserData.fromId(message.getAuthor().getId());
-            // Send embed
+
             sendEmbed(message.getAuthor(), message, data);
         } else {
-            // Send error
             MessageUtil.sendError("Invalid arguments!", "Invalid arguments! \nUsage: ```-rank @User``` Or ```" +
                     "-rank <RankNumber>```", message);
         }
-        // Return null
-        return null;
     }
 
     private void sendEmbed(User user, Message message, UserData data) {
-        // Check if null
         if (data == null) {
-            // Send error
             MessageUtil.sendError("Invalid data!", "Could not get rank for **" + user.getName()
                     + "**!", message);
-            // Return
             return;
         }
-        // Create embed
+
         EmbedBuilder embed = new EmbedBuilder();
-        // Set colour
+
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
         embed.addField("User", "`" + data.getUsername() + "`", false);
-        // Get rank
+
         int[] rank = data.getRank();
-        // Add rank
+
         embed.addField("Rank", rank[0] + "/" + rank[1], false);
-        // Add level
+
         embed.addField("Level", data.getLevel() + "", false);
-        // Compile string
-        String levelXp = LevelsUtil.remainingXp(data.getTotalXp()) + "/" + LevelsUtil.xpToNextLevel(data
-                .getLevel());
-        // Add xp
+
+        String levelXp = LevelsUtil.remainingXp(data.getTotalXp()) + "/" + LevelsUtil.xpToNextLevel(data.getLevel());
+
         embed.addField("XP", levelXp, false);
-        // Add total xp
+
         embed.addField("Total XP", data.getTotalXp() + "", false);
-        // Send embed
+
         message.getChannel().sendMessage(embed.build()).complete();
     }
 

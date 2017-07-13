@@ -32,13 +32,16 @@ public class RewardsCommand implements ICommand {
         embed.setAuthor("Rewards", null, jda.getSelfUser().getEffectiveAvatarUrl());
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
 
-        String content = "";
+        StringBuilder content = new StringBuilder();
+
         for (int level : AutoRole.roles.keySet()) {
             String role = AutoRole.roles.get(level).get("name").toString();
 
-            content += "**" + role + "**\n";
-            content += "When you reach level " + level + ", you will be rewarded with the " + role + " role.\n";
+            content.append("**").append(role).append("**\n")
+                    .append("When you reach level ").append(level).append(", you will be rewarded with the ")
+                    .append(role).append(" role.\n");
         }
+
         embed.setDescription(content);
 
         message.getChannel().sendMessage(embed.build()).complete();
