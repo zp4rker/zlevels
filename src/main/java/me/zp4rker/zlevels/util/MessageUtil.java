@@ -1,8 +1,8 @@
 package me.zp4rker.zlevels.util;
 
+import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.ZLevels;
 import me.zp4rker.zlevels.config.Config;
-import me.zp4rker.core.logger.ZLogger;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 

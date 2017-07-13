@@ -1,9 +1,9 @@
 package me.zp4rker.zlevels.lstnr;
 
+import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.ZLevels;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.StaffRating;
-import me.zp4rker.core.logger.ZLogger;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.core.hooks.SubscribeEvent;

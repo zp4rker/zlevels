@@ -12,17 +12,12 @@ public class MemberLeaveListener {
 
     @SubscribeEvent
     public void onMemberLeave(GuildMemberLeaveEvent event) {
-        // Get user id
         String id = event.getMember().getUser().getId();
-        // Get user data
         UserData data = UserData.fromId(id);
-        // Check if null
+
         if (data == null) return;
-        // Run asynchronously
-        ZLevels.async.submit(() -> {
-            // Delete the data
-            data.delete();
-        });
+
+        ZLevels.async.submit(() -> data.delete());
     }
 
 }

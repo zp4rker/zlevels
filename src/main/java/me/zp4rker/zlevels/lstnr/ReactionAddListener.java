@@ -1,17 +1,20 @@
 package me.zp4rker.zlevels.lstnr;
 
+import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.ZLevels;
 import me.zp4rker.zlevels.cmd.LeaderboardCommand;
+import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.StaffRating;
 import me.zp4rker.zlevels.db.UserData;
-import me.zp4rker.zlevels.config.Config;
-import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.util.LevelsUtil;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.hooks.SubscribeEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Handles events when reactions are added.
@@ -116,51 +119,40 @@ public class ReactionAddListener {
                 LeaderboardCommand.resetReactions(message, page);
                 return;
             }
-            // Set new page to 0
+
             int newPage = 0;
-            // Check if correct reaction
+
             if (event.getReaction().getEmote().getName().equals("\u27A1") ||
                 event.getReaction().getEmote().getName().equals("\u2B05") ||
                 event.getReaction().getEmote().getName().equals("\u274C")) {
-                // Get if next or prev
                 boolean next = event.getReaction().getEmote().getName().equals("\u27A1");
-                // Check if delete
+
                 if (event.getReaction().getEmote().getName().equals("\u274C")) {
-                    // Delete message
                     message.delete().complete();
-                    // Return
                     return;
                 }
-                // Check if next
+
                 if (next) {
-                    // Increment page
                     page++;
                 } else {
-                    // Decrement page
                     page--;
                 }
-                // Get embed
+
                 MessageEmbed newEmbed = LeaderboardCommand.compileEmbed(message, new String[] {page + ""});
-                // Edit message
                 message.editMessage(newEmbed).complete();
-                // Set new page
                 newPage = page;
             }
-            // Reset reactions
+
             LeaderboardCommand.resetReactions(message, newPage);
         });
     }
 
     private boolean alreadyReacted(Message message, MessageReactionAddEvent event) {
-        // Loop through all reactions
         return message.getReactions().stream().anyMatch(reaction -> {
             try {
-                // Check if this reaction
-                if (reaction.equals(event.getReaction())) return false;
-                // Return if contains user
-                return reaction.getUsers().complete().contains(event.getUser());
+                return !reaction.equals(event.getReaction()) &&
+                        reaction.getUsers().complete().contains(event.getUser());
             } catch (Exception e) {
-                // Return false
                 return false;
             }
         });
