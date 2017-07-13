@@ -1,6 +1,5 @@
 package me.zp4rker.zlevels.db;
 
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
@@ -25,12 +24,12 @@ public class Database {
 
         try {
             ConnectionSource source = openConnection();
-            Dao<UserData, String> userData = DaoManager.createDao(source, UserData.class);
+            DaoManager.createDao(source, UserData.class);
 
             TableUtils.createTableIfNotExists(source, UserData.class);
 
             if (Config.RATINGS_ENABLED) {
-                Dao<StaffRating, String> staffRatings = DaoManager.createDao(source, StaffRating.class);
+                DaoManager.createDao(source, StaffRating.class);
 
                 TableUtils.createTableIfNotExists(source, StaffRating.class);
             }

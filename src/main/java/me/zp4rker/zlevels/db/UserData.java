@@ -72,11 +72,9 @@ public class UserData {
      * @return The username.
      */
     public String getUsername() {
-        // Get user
         User user = ZLevels.jda.getUserById(getUserId());
-        // Set username and discriminator
         setUsername(user.getName() + "#" + user.getDiscriminator());
-        // Return username
+
         return username;
     }
 
@@ -94,12 +92,10 @@ public class UserData {
      *
      * @return The avatar url.
      */
-    public String getAvatarUrl() {
-        // Get User
+    private String getAvatarUrl() {
         User user = ZLevels.jda.getUserById(getUserId());
-        // Set avatar url
         setAvatarUrl(user.getEffectiveAvatarUrl());
-        // Return avatar url
+
         return avatarUrl;
     }
 
@@ -151,24 +147,19 @@ public class UserData {
      * @param level The level.
      */
     private void setLevel(int level) {
-        // Check if new level
         if (level > this.level) {
-            // Send info
             ZLogger.info(getUsername() + " just levelled up to level " + level + "!");
-            // Get User
+
             User user = ZLevels.jda.getUserById(getUserId());
-            // Catch errors
+
             try {
-                // Open DM
-                user.openPrivateChannel().complete();
+                user.openPrivateChannel().complete()
+                        .sendMessage("Congratulations, you are now level " + level + "!").queue();
             } catch (Exception e) {
-                // Send warning
                 ZLogger.warn("Couldn't open DM or already open!");
             }
-            // Send DM
-            user.getPrivateChannel().sendMessage("Congratulations, you are now level " + level + "!").queue();
         }
-        // Set level
+
         this.level = level;
     }
 
@@ -176,32 +167,8 @@ public class UserData {
      * Saves this user data to the cache.
      */
     public void save() {
-        /*// Get current data
-        UserData current = this;
-        // Update avatar url
-        current.setAvatarUrl(current.getAvatarUrl());
-        // Update username
-        current.setUsername(current.getUsername());
-        // Run asynchronously
-        ZLevels.async.submit(() -> {
-            try {
-                // Get the connection
-                ConnectionSource source = Database.openConnection();
-                // Get the Dao
-                Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
-                // Save the record
-                db.createOrUpdate(current);
-                // Close connection
-                Database.closeConnection();
-            } catch (Exception e) {
-                // Send warning
-                ZLogger.warn("Could not save UserData for " + getUserId() + "!");
-                e.printStackTrace();
-            }
-        });*/
-        // Check if in cache already
         if (cache.containsKey(getUserId())) cache.replace(getUserId(), this);
-        // Add to cache
+
         cache.put(getUserId(), this);
     }
 
@@ -217,6 +184,8 @@ public class UserData {
         ZLevels.async.submit(() -> {
             try {
                 ConnectionSource source = Database.openConnection();
+                if (source == null) return;
+
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
                 db.createOrUpdate(data);
                 Database.closeConnection();
@@ -257,6 +226,8 @@ public class UserData {
         ZLevels.async.submit(() -> {
             try {
                 ConnectionSource source = Database.openConnection();
+                if (source == null) return;
+
                 Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
                 db.delete(current);
@@ -281,6 +252,8 @@ public class UserData {
         }
         try {
             ConnectionSource source = Database.openConnection();
+            if (source == null) return null;
+
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
             UserData data = db.queryForEq("userId", userId).get(0);
@@ -307,6 +280,8 @@ public class UserData {
     public static List<UserData> getAllData() {
         try {
             ConnectionSource source = Database.openConnection();
+            if (source == null) return null;
+
             Dao<UserData, String> db = DaoManager.createDao(source, UserData.class);
 
             List<UserData> dataList = new ArrayList<>();
@@ -363,6 +338,8 @@ public class UserData {
 
         List<UserData> dataList = getAllData();
 
+        if (dataList == null) return null;
+
         rank[1] = dataList.size();
         rank[0] = getPosition(dataList, current) + 1;
 
@@ -394,6 +371,8 @@ public class UserData {
         int index = rank - 1;
 
         List<UserData> dataList = getAllData();
+
+        if (dataList == null) return null;
 
         return dataList.get(index);
     }

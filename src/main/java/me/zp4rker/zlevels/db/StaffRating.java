@@ -70,6 +70,8 @@ public class StaffRating {
         ZLevels.async.submit(() -> {
             try {
                 ConnectionSource source = Database.openConnection();
+                if (source == null) return;
+
                 Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
 
                 db.createOrUpdate(current);
@@ -89,6 +91,8 @@ public class StaffRating {
         ZLevels.async.submit(() -> {
             try {
                 ConnectionSource source = Database.openConnection();
+                if (source == null) return;
+
                 Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
 
                 db.delete(current);
@@ -108,6 +112,8 @@ public class StaffRating {
     public static StaffRating fromId(String userId) {
         try {
             ConnectionSource source = Database.openConnection();
+            if (source == null) return null;
+
             Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
 
             StaffRating data = db.queryForEq("userId", userId).get(0);
@@ -129,6 +135,8 @@ public class StaffRating {
     private static List<StaffRating> getAllData() {
         try {
             ConnectionSource source = Database.openConnection();
+            if (source == null) return null;
+
             Dao<StaffRating, String> db = DaoManager.createDao(source, StaffRating.class);
 
             List<StaffRating> dataList = db.queryForAll();
