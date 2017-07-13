@@ -27,9 +27,7 @@ public class InfoCommand implements ICommand {
     }
 
     private void compileEmbed(EmbedBuilder embed) {
-        embed.setTitle("ZLevels");
-
-        embed.addBlankField(false);
+        embed.setTitle("ZLevels", "https://github.com/ZP4RKER/zlevels");
 
         embed.addField("Name", "ZLevels", false);
         embed.addField("Description", "An open-source Discord bot, which adds a levelling system to your server.", false);
