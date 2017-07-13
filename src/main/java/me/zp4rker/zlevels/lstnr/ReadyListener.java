@@ -72,7 +72,7 @@ public class ReadyListener {
         });
 
         ZLevels.jda.getTextChannelById(Config.LOG_CHANNEL)
-                .sendMessage("ZLevels v " + ZLevels.VERSION + " started successfully!").queue();
+                .sendMessage("ZLevels " + ZLevels.VERSION + " started successfully!").queue();
     }
 
 }
