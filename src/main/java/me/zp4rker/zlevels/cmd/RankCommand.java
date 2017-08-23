@@ -21,7 +21,7 @@ public class RankCommand implements ICommand {
                     usage = "{prefix}rank <@User | Rank#>",
                     description = "Displays the specified user's rank and XP.")
     public void onCommand(Message message, String[] args) {
-        if (args.length >= 1) {
+        if (args.length == 1) {
             if (message.getMentionedUsers().size() != 1) {
                 try {
                     int rank = Integer.parseInt(args[0]);
@@ -67,21 +67,20 @@ public class RankCommand implements ICommand {
 
         EmbedBuilder embed = new EmbedBuilder();
 
-        embed.setThumbnail(user.getEffectiveAvatarUrl());
+        embed.setAuthor(data.getUsername(), null, user.getEffectiveAvatarUrl());
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
-        embed.addField("User", "`" + data.getUsername() + "`", false);
 
         int[] rank = data.getRank();
 
-        embed.addField("Rank", rank[0] + "/" + rank[1], false);
+        embed.addField("Rank", rank[0] + "/" + rank[1], true);
 
-        embed.addField("Level", data.getLevel() + "", false);
+        embed.addField("Level", data.getLevel() + "", true);
 
         String levelXp = LevelsUtil.remainingXp(data.getTotalXp()) + "/" + LevelsUtil.xpToNextLevel(data.getLevel());
 
-        embed.addField("XP", levelXp, false);
+        embed.addField("XP", levelXp + " (Total: " + data.getTotalXp() + ")", true);
 
-        embed.addField("Total XP", data.getTotalXp() + "", false);
+        //embed.addField("Total XP", data.getTotalXp() + "", false);
 
         message.getChannel().sendMessage(embed.build()).complete();
     }
