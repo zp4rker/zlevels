@@ -67,6 +67,7 @@ public class RankCommand implements ICommand {
 
         EmbedBuilder embed = new EmbedBuilder();
 
+        embed.setThumbnail(user.getEffectiveAvatarUrl());
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
         embed.addField("User", "`" + data.getUsername() + "`", false);
 
