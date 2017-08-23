@@ -73,15 +73,11 @@ public class RankCommand implements ICommand {
         int[] rank = data.getRank();
         String levelXp = LevelsUtil.remainingXp(data.getTotalXp()) + "/" + LevelsUtil.xpToNextLevel(data.getLevel());
 
-        embed.setDescription("Rank\n`" + rank[0] + "/" + rank[1] +
-                "`\nLevel\n`" + data.getLevel() +
-                "`\nXP\n`" + levelXp + " (Total: " + data.getTotalXp() + ")`");
+        embed.addField("Rank", rank[0] + "/" + rank[1], false);
 
-        //embed.addField("Rank", rank[0] + "/" + rank[1], true);
+        embed.addField("Level", data.getLevel() + "", false);
 
-        //embed.addField("Level", data.getLevel() + "", true);
-
-        //embed.addField("XP", levelXp + " (Total: " + data.getTotalXp() + ")", false);
+        embed.addField("XP", levelXp + " (Total: " + data.getTotalXp() + ")", false);
 
         message.getChannel().sendMessage(embed.build()).complete();
     }
