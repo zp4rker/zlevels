@@ -24,7 +24,7 @@ public class FlushCommand implements ICommand {
         if (Config.OPS.stream().noneMatch(s -> s.equals(id))) return;
 
         forceAutoRole();
-        saveAllData();
+        UserData.flushCache();
         Pruner.prune();
     }
 
@@ -38,18 +38,6 @@ public class FlushCommand implements ICommand {
 
             ZLogger.info("Successfully forced auto role on all user data.");
         }
-    }
-
-    private void saveAllData() {
-        ZLogger.info("Saving all user data...");
-
-        for (UserData data : UserData.getAllData()) {
-            data.save();
-        }
-
-        UserData.flushCache();
-
-        ZLogger.info("Successfully saved all user data.");
     }
 
 }

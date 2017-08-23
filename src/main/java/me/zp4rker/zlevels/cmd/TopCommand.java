@@ -26,7 +26,7 @@ public class TopCommand implements ICommand {
     private void sendEmbed(Message message, String[] args) {
         EmbedBuilder embed = new EmbedBuilder();
 
-        embed.setAuthor(Config.NAME + " All time leaderboard", null, null);
+        embed.setAuthor(Config.NAME + " all time leaderboard", null, null);
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
 
         try {
@@ -45,7 +45,7 @@ public class TopCommand implements ICommand {
                 count = UserData.getAllData().size();
             }
 
-            embed.setFooter("Top " + count, null);
+            embed.setFooter("Top " + count, message.getGuild().getIconUrl());
 
             String desc = compileBoard(count, message);
             embed.setDescription(desc);
