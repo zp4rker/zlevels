@@ -30,7 +30,7 @@ public class RankCommand implements ICommand {
 
                     sendEmbed(message.getJDA().getUserById(data.getUserId()), message, data);
                 } catch (Exception e) {
-                    MessageUtil.sendError("Invalid arguments!", "Invalid arguments! \nUsage: ```-rank @User``` Or ```" +
+                    MessageUtil.sendError("Invalid arguments!", "Usage: ```-rank @User``` Or ```" +
                             "-rank <RankNumber>```", message);
                 }
 
@@ -53,7 +53,7 @@ public class RankCommand implements ICommand {
 
             sendEmbed(message.getAuthor(), message, data);
         } else {
-            MessageUtil.sendError("Invalid arguments!", "Invalid arguments! \nUsage: ```-rank @User``` Or ```" +
+            MessageUtil.sendError("Invalid arguments!", "Usage: ```-rank @User``` Or ```" +
                     "-rank <RankNumber>```", message);
         }
     }
@@ -71,14 +71,17 @@ public class RankCommand implements ICommand {
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
 
         int[] rank = data.getRank();
-
-        embed.addField("Rank", rank[0] + "/" + rank[1], true);
-
-        embed.addField("Level", data.getLevel() + "", true);
-
         String levelXp = LevelsUtil.remainingXp(data.getTotalXp()) + "/" + LevelsUtil.xpToNextLevel(data.getLevel());
 
-        embed.addField("XP", levelXp + " (Total: " + data.getTotalXp() + ")", false);
+        embed.setDescription("**Rank**\n" + rank[0] + "/" + rank[1] +
+                "\n**Level**" + data.getLevel() +
+                "\n**XP**" + levelXp + " (Total: " + data.getTotalXp() + ")");
+
+        //embed.addField("Rank", rank[0] + "/" + rank[1], true);
+
+        //embed.addField("Level", data.getLevel() + "", true);
+
+        //embed.addField("XP", levelXp + " (Total: " + data.getTotalXp() + ")", false);
 
         message.getChannel().sendMessage(embed.build()).complete();
     }
