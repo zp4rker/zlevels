@@ -67,11 +67,14 @@ public class RankCommand implements ICommand {
 
         EmbedBuilder embed = new EmbedBuilder();
 
-        embed.setAuthor(data.getUsername(), null, user.getEffectiveAvatarUrl());
+        //embed.setAuthor(data.getUsername(), null, user.getEffectiveAvatarUrl());
+        embed.setThumbnail(user.getEffectiveAvatarUrl());
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
 
         int[] rank = data.getRank();
         String levelXp = LevelsUtil.remainingXp(data.getTotalXp()) + "/" + LevelsUtil.xpToNextLevel(data.getLevel());
+
+        embed.addField("User", data.getUsername(), false);
 
         embed.addField("Rank", rank[0] + "/" + rank[1], false);
 
