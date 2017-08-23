@@ -7,6 +7,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,13 +20,12 @@ public class MessageUtil {
         ZLevels.async.submit(() -> {
             try {
                 Message futureMessage = message.getChannel().sendMessage(new EmbedBuilder().setFooter(error, null)
-                        .setTitle(errorMessage, null).setColor(Color.RED).build()).complete();
+                        .setDescription(errorMessage).setColor(Color.RED).build()).complete();
 
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        futureMessage.delete().queue();
-                        message.delete().queue();
+                        message.getTextChannel().deleteMessages(Arrays.asList(message, futureMessage)).complete();
                     }
                 }, Config.ERROR_LENGTH);
             } catch (Exception e) {
