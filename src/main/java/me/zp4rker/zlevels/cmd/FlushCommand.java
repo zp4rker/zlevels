@@ -7,6 +7,7 @@ import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.util.AutoRole;
 import me.zp4rker.zlevels.util.LevelsUtil;
+import me.zp4rker.zlevels.util.MessageUtil;
 import me.zp4rker.zlevels.util.Pruner;
 import net.dv8tion.jda.core.entities.Message;
 
@@ -19,6 +20,8 @@ public class FlushCommand implements ICommand {
                     usage = "{prefix}flush",
                     description = "Prunes members, forces auto-role and saves all data.")
     public void onCommand(Message message) {
+        MessageUtil.bypassDeleteLogs(message, message.getChannel().sendMessage("`").complete());
+
         String id = message.getAuthor().getId();
 
         if (Config.OPS.stream().noneMatch(s -> s.equals(id))) return;

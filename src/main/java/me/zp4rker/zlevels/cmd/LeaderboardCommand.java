@@ -5,6 +5,7 @@ import me.zp4rker.core.command.ICommand;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.zlevels.util.LevelsUtil;
+import me.zp4rker.zlevels.util.MessageUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -33,7 +34,7 @@ public class LeaderboardCommand implements ICommand {
             resetReactions(newMessage, 1);
         }
 
-        message.delete().complete();
+        MessageUtil.bypassDeleteLogs(message, message.getChannel().sendMessage("`").complete());
     }
 
     public static MessageEmbed compileEmbed(Message message, String[] args) {

@@ -16,22 +16,35 @@ import java.util.TimerTask;
  */
 public class MessageUtil {
 
-    public static void sendError(String error, String errorMessage, Message message) {
+    private static Message futureMessage;
+
+    public static Message sendError(String error, String errorMessage, Message message) {
+        futureMessage = null;
         ZLevels.async.submit(() -> {
             try {
-                Message futureMessage = message.getChannel().sendMessage(new EmbedBuilder().setFooter(error, null)
+                futureMessage = message.getChannel().sendMessage(new EmbedBuilder().setFooter(error, null)
                         .setDescription(errorMessage).setColor(Color.RED).build()).complete();
-
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        message.getTextChannel().deleteMessages(Arrays.asList(message, futureMessage)).complete();
-                    }
-                }, Config.ERROR_LENGTH);
             } catch (Exception e) {
                 ZLogger.info("Could not send error message!");
             }
         });
+
+        return futureMessage;
+    }
+
+    public static void selfDestruct(Message message, long delay) {
+        if (message == null) return;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                message.delete().complete();
+            }
+        }, delay);
+    }
+
+    public static void bypassDeleteLogs(Message... messages) {
+        messages[0].getTextChannel().deleteMessages(Arrays.asList(messages)).complete();
     }
 
 }

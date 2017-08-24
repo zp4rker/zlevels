@@ -5,7 +5,7 @@ import me.zp4rker.core.command.RegisterCommand;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.zlevels.util.LevelsUtil;
-import me.zp4rker.zlevels.util.MessageUtil;
+import static me.zp4rker.zlevels.util.MessageUtil.*;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.User;
@@ -30,15 +30,15 @@ public class RankCommand implements ICommand {
 
                     sendEmbed(message.getJDA().getUserById(data.getUserId()), message, data);
                 } catch (Exception e) {
-                    MessageUtil.sendError("Invalid arguments!", "Usage: ```-rank @User``` Or ```" +
-                            "-rank <RankNumber>```", message);
+                    selfDestruct(sendError("Invalid arguments!", "Usage: ```-rank @User``` Or ```" +
+                            "-rank <RankNumber>```", message), Config.ERROR_LENGTH);
                 }
 
                 return;
             }
 
             if (message.getMentionedUsers().get(0).isBot()) {
-                MessageUtil.sendError("Invalid user!", "Bots do not have ranks!", message);
+                selfDestruct(sendError("Invalid user!", "Bots do not have ranks!", message), Config.ERROR_LENGTH);
                 return;
             }
 
@@ -53,15 +53,15 @@ public class RankCommand implements ICommand {
 
             sendEmbed(message.getAuthor(), message, data);
         } else {
-            MessageUtil.sendError("Invalid arguments!", "Usage: ```-rank @User``` Or ```" +
-                    "-rank <RankNumber>```", message);
+            selfDestruct(sendError("Invalid arguments!", "Usage: ```-rank @User``` Or ```" +
+                    "-rank <RankNumber>```", message), Config.ERROR_LENGTH);
         }
     }
 
     private void sendEmbed(User user, Message message, UserData data) {
         if (data == null) {
-            MessageUtil.sendError("Invalid data!", "Could not get rank for **" + user.getName()
-                    + "**!", message);
+            selfDestruct(sendError("Invalid data!", "Could not get rank for **" + user.getName()
+                    + "**!", message), Config.ERROR_LENGTH);
             return;
         }
 
