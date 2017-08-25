@@ -26,7 +26,7 @@ public class HelpCommand implements ICommand {
 
         embed.setFooter("Written by ZP4RKER", "https://github.com/ZP4RKER");
 
-        embed.setDescription(compileList());
+        compileList(embed);
 
         try {
             message.getAuthor().openPrivateChannel().complete().sendMessage(embed.build()).complete();
@@ -35,26 +35,24 @@ public class HelpCommand implements ICommand {
         }
     }
 
-    private String compileList() {
-        StringBuilder sb = new StringBuilder();
+    private void compileList(EmbedBuilder embed) {
 
         for (CommandHandler.Command command : ZLevels.handler.getCommands().values()) {
             if (command.getCommandAnnotation().aliases()[0].equals("help")) continue;
 
-            sb.append(compileCommand(command));
+            addCommand(command, embed);
         }
-
-        return sb.toString();
     }
 
-    private String compileCommand(CommandHandler.Command command) {
+    private void addCommand(CommandHandler.Command command, EmbedBuilder embed) {
         String label = command.getCommandAnnotation().aliases()[0];
 
         String usage = command.getCommandAnnotation().usage().replace("{prefix}", Config.PREFIX);
 
         String desc = command.getCommandAnnotation().description();
 
-        return "**" + label + "** - " + desc + "\n__Usage:__ `" + usage + "`\n\n";
+        embed.addField(label.substring(0, 1).toUpperCase() + label.substring(1),
+                "**Usage:** `" + usage + "`\n**Description:** " + desc, true);
     }
 
 }

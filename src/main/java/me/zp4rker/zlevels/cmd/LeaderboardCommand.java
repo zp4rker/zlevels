@@ -48,7 +48,7 @@ public class LeaderboardCommand implements ICommand {
 
             if (index > LevelsUtil.getPageCount() || index < 1) throw new Exception();
 
-            embed.setFooter("Top Members - Page " + index, null);
+            embed.setFooter("Top Members - Page " + index, message.getJDA().getSelfUser().getEffectiveAvatarUrl());
 
             String desc = compileBoard(index, message);
             embed.setDescription(desc);

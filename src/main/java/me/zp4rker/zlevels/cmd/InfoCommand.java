@@ -27,13 +27,13 @@ public class InfoCommand implements ICommand {
     }
 
     private void compileEmbed(EmbedBuilder embed) {
-        embed.setTitle("ZLevels", "https://github.com/ZP4RKER/zlevels");
+        embed.setAuthor("ZLevels", "https://github.com/ZP4RKER/zlevels", null);
 
-        embed.addField("Name", "ZLevels", false);
+        embed.addField("Name", "ZLevels", true);
+        embed.addField("Version", ZLevels.VERSION, true);
+        embed.addField("Commands", ZLevels.handler.getCommands().size() + "", true);
+        embed.addField("Author", "<@145064570237485056>", true);
         embed.addField("Description", "An open-source Discord bot, which adds a levelling system to your server.", false);
-        embed.addField("Version", ZLevels.VERSION, false);
-        embed.addField("Commands", ZLevels.handler.getCommands().size() + "", false);
-        embed.addField("Author", "<@145064570237485056>", false);
 
         embed.setColor(Color.decode(Config.EMBED_COLOUR));
     }
