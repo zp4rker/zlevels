@@ -40,10 +40,6 @@ public class Config {
 
     public static boolean AUTOROLE_ENABLED = true;
 
-    public static boolean RATINGS_ENABLED = true;
-    public static String STAFF_ROLE = "";
-    public static List<String> CHANNELS_FOR_RATINGS = new ArrayList<>();
-
     /**
      * Loads the config file.
      *
@@ -139,10 +135,6 @@ public class Config {
 
         ERROR_LENGTH = data.getLong("more-settings.error-length");
         AUTOROLE_ENABLED = data.getBoolean("more-settings.autorole-enabled");
-
-        RATINGS_ENABLED = data.getBoolean("staff-ratings.enabled");
-        STAFF_ROLE = data.getString("staff-ratings.staff-role");
-        CHANNELS_FOR_RATINGS = data.getStringList("staff-ratings.channels");
 
         ZLogger.info("Successfully loaded settings from config.");
     }
@@ -251,12 +243,6 @@ public class Config {
                 return "more-settings.error-length";
             case "AUTOROLE_ENABLED":
                 return "more-settings.autorole-enabled";
-            case "RATINGS_ENABLED":
-                return "staff-ratings.enabled";
-            case "STAFF_ROLE":
-                return "staff-ratings.staff-role";
-            case "CHANNELS_FOR_RATINGS":
-                return "staff-ratings.channels";
             default:
                 return null;
         }

@@ -5,7 +5,6 @@ import me.zp4rker.zlevels.ZLevels;
 import me.zp4rker.zlevels.cmd.*;
 import me.zp4rker.zlevels.config.Config;
 import me.zp4rker.zlevels.db.Database;
-import me.zp4rker.zlevels.db.StaffRating;
 import me.zp4rker.zlevels.db.UserData;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.ReadyEvent;
@@ -31,7 +30,6 @@ public class ReadyListener {
         ZLevels.handler.registerCommand(new RankCommand());
         ZLevels.handler.registerCommand(new TopCommand());
         ZLevels.handler.registerCommand(new LeaderboardCommand());
-        ZLevels.handler.registerCommand(new RatingCommand());
         ZLevels.handler.registerCommand(new RewardsCommand());
         ZLevels.handler.registerCommand(new InactiveCommand());
         ZLevels.handler.registerCommand(new FlushCommand());
@@ -63,8 +61,6 @@ public class ReadyListener {
 
         ZLevels.async.submit(() -> {
             Database.load();
-
-            StaffRating.startMonth();
 
             UserData.startFlushTimer();
 

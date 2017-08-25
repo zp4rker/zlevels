@@ -28,12 +28,6 @@ public class Database {
 
             TableUtils.createTableIfNotExists(source, UserData.class);
 
-            if (Config.RATINGS_ENABLED) {
-                DaoManager.createDao(source, StaffRating.class);
-
-                TableUtils.createTableIfNotExists(source, StaffRating.class);
-            }
-
             ZLogger.info("Successfully loaded Database!");
         } catch (Exception e) {
             ZLogger.warn("Could not load Database!");

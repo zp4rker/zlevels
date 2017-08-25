@@ -4,7 +4,6 @@ import me.zp4rker.core.logger.ZLogger;
 import me.zp4rker.zlevels.ZLevels;
 import me.zp4rker.zlevels.cmd.LeaderboardCommand;
 import me.zp4rker.zlevels.config.Config;
-import me.zp4rker.zlevels.db.StaffRating;
 import me.zp4rker.zlevels.db.UserData;
 import me.zp4rker.zlevels.util.LevelsUtil;
 import net.dv8tion.jda.core.entities.*;
@@ -63,41 +62,6 @@ public class ReactionAddListener {
                         spamFilter.remove(event.getUser().getId());
                     }
                 }, 1000 * 60);
-            } catch (Exception e) {
-                ZLogger.warn("Could not handle ReactionAddEvent correctly!");
-            }
-        });
-
-        ZLevels.async.submit(() -> {
-            if (!Config.RATINGS_ENABLED) return;
-
-            try {
-                if (!event.getChannel().getType().equals(ChannelType.TEXT)) return;
-                if (!Config.CHANNELS_FOR_RATINGS.contains(event.getChannel().getId())) return;
-                if (event.getChannel().getMessageById(event.getMessageId()).complete().getAuthor().isBot()) return;
-                if (event.getChannel().getMessageById(event.getMessageId()).complete().getAuthor().equals(event.getUser())) return;
-
-                Message message = event.getChannel().getMessageById(event.getMessageId()).complete();
-
-                if (alreadyReacted(message, event)) return;
-
-                Guild guild = ((TextChannel) event.getChannel()).getGuild();
-                User user = message.getAuthor();
-
-                if (guild.getMember(user).getRoles().stream()
-                        .noneMatch(role -> role.getName().equals(Config.STAFF_ROLE))) return;
-
-                StaffRating rating = StaffRating.fromId(user.getId());
-
-                if (rating == null) {
-                    rating = new StaffRating();
-                    rating.setUserId(user.getId());
-                }
-
-                rating.setRatings(rating.getRatings() + 1);
-                rating.setMonthlyRatings(rating.getMonthlyRatings() + 1);
-
-                rating.save();
             } catch (Exception e) {
                 ZLogger.warn("Could not handle ReactionAddEvent correctly!");
             }

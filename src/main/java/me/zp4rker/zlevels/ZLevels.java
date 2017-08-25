@@ -71,7 +71,6 @@ public class ZLevels {
                     .addEventListener(new MessageSendListener())
                     .addEventListener(new MemberLeaveListener())
                     .addEventListener(new ReactionAddListener())
-                    .addEventListener(new ReactionRemoveListener())
                     .buildAsync();
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
