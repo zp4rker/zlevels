@@ -113,6 +113,8 @@ public class Config {
         }
 
         NAME = data.getString("basic-settings.name");
+        TOKEN = data.getString("basic-settings.token");
+        PREFIX = data.getString("basic-settings.prefix");
         SERVER = data.getString("basic-settings.server");
         OPS = data.getStringList("basic-settings.ops");
         EMBED_COLOUR = data.getString("basic-settings.embed-colour");
@@ -148,6 +150,8 @@ public class Config {
 
             switch (key.toString()) {
                 case "NAME":
+                case "TOKEN":
+                case "PREFIX":
                 case "SERVER":
                 case "DB_HOST":
                 case "DB_PORT":
@@ -205,6 +209,10 @@ public class Config {
         switch (oldKey) {
             case "NAME":
                 return "basic-settings.name";
+            case "TOKEN":
+                return "basic-settings.token";
+            case "PREFIX":
+                return "basic-settings.prefix";
             case "SERVER":
                 return "basic-settings.server";
             case "EMBED_COLOUR":
