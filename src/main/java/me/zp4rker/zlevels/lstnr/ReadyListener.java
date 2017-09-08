@@ -41,22 +41,7 @@ public class ReadyListener {
         if (!Config.GAME_STATUS.isEmpty()) {
             ZLogger.info("Setting game status...");
 
-            event.getJDA().getPresence().setGame(new Game() {
-                @Override
-                public String getName() {
-                    return Config.GAME_STATUS;
-                }
-
-                @Override
-                public String getUrl() {
-                    return null;
-                }
-
-                @Override
-                public GameType getType() {
-                    return GameType.DEFAULT;
-                }
-            });
+            event.getJDA().getPresence().setGame(Game.of(Config.GAME_STATUS));
         }
 
         ZLevels.async.submit(() -> {
